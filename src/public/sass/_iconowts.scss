@@ -1,0 +1,26 @@
+// ICONO WHATSAPP
+.icon-wtsp {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1500;
+    a {
+        img {
+            width: 70px;
+        }
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+@media screen and (max-width:650px){
+    .icon-wtsp {
+        right: 15px;
+        a {
+            img {
+                width: 60px;
+            }
+        }
+    }
+}

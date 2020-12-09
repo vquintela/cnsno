@@ -1,0 +1,31 @@
+.footer-redes {
+    text-align: center;
+    width: 100%;
+    background-color: $celeste;
+    padding: 20px 0;
+    .redes-title {
+        h4 {
+            color: $blanco;
+            font-size: 1.2rem;
+            font-weight: bolder;
+        }
+    }
+    .redes-contenido {
+        a {
+            i {
+                font-size: 2rem;
+                margin: 10px;
+                color: $blanco;
+            }
+        }
+    }
+}
+
+.footer-zocalo {
+    background-color: $negro;
+    color: $blanco;
+    text-align: center;
+    h6 {
+        margin: 0;
+    }
+}

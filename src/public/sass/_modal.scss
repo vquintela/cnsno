@@ -1,0 +1,42 @@
+/*Modal fade*/
+.mascara {
+    display: none; 
+    position: fixed; 
+    z-index: 5000000000000; 
+    left: 0;
+    top: 0;
+    width: 100vw; 
+    height: 100vh; 
+    background-color: rgba(0,0,0,0.8); 
+}
+.contenido {
+    animation: modal 1s;
+    position: fixed;
+    top: 5vh;
+    left: 10vw;
+    right: 10vw;
+    margin: auto;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: auto;
+    max-width: 450px;
+}
+.cerrar {
+    color: #aaaaaa;
+    margin-left: auto;
+    font-size: 28px;
+    font-weight: bold;
+}
+.cerrar:hover,
+.cerrar:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+@keyframes modal {
+    0% {
+        transform: translateY(-150%);
+    }
+}

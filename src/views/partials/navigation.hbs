@@ -1,0 +1,44 @@
+<!-- HEADER -->
+<nav class="nav">
+    <div class="menu-btn" id="btn-menu">
+        <i class="fas fa-bars fa-2x"></i>
+    </div>
+    <div class="carrito-nav">
+        <a class="" href="#">
+            <span class="fa-stack fa-2x has-badge" data-count="0" id="cart-navbar">
+                <i class="fa fa-shopping-cart fa-stack-1x"></i>
+            </span>
+        </a>
+    </div>
+    <div class="nav-img">
+        <img src="img/logoColor.png" alt="img-nav">
+    </div>
+    <div class="nav-navbar" id="nav-navbar">
+        <ul>
+            <li>
+                <a href="#">inicio</a>
+            </li>
+            <li>
+                <a href="#">productos</a>
+            </li>
+            <li>
+                <a href="#">destacados</a>
+            </li>
+            <li>
+                <a href="#">promociones</a>
+            </li>
+            {{#if user}}
+            <li>
+                <a href="#">salir</a>
+            </li>
+            {{else}}
+            <li>
+                <a href="#" id="ingreso">ingresar</a>
+            </li>
+            <li>
+                <a href="#">registrarse</a>
+            </li>
+            {{/if}}
+        </ul>
+    </div>
+</nav>

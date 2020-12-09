@@ -1,0 +1,154 @@
+.contenedor-detalle-producto {
+    .imagenes-detalle-producto {
+        margin: 20px 0;
+        position: relative;
+        width: 100%;
+        .img-principal-producto {
+            height: 50vh;
+            img {
+                position: absolute;
+                object-fit: contain;
+                width: 100%;
+                height: 100%;
+                display: none;
+            }
+            .show-img {
+                display: block;
+                animation: imgShow 1s;
+            }
+            @keyframes imgShow {
+                0% {
+                    opacity: 0.3;
+                }
+            }
+        }
+        .navegacion-detalle-producto {
+            top: 50%;
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            i {
+                color: $rosa;
+                font-size: 2rem;
+                margin: 0 10px;
+                &:hover {
+                    color: $celeste;
+                }
+            }
+        }
+    }
+}
+
+.texto-detalle-producto {
+    width: 90%;
+    margin: 0 auto;
+    h3 {
+        text-transform: uppercase;
+    }
+    p {
+        font-weight: lighter;
+        opacity: 0.6;
+    }
+}
+
+.pago-detalle-producto {
+    text-align: center;
+    h3 {
+        opacity: 0.6;
+    }
+    .pago-detalle-boton {
+        width: 90%;
+        margin: 20px auto;
+        
+        a {
+            display: block;
+            background-color: #212121;
+            border: none;
+            color: white;
+            text-transform: uppercase;
+            font-weight: 300;
+            font-size: 1.2rem;
+            padding: 10px 0;
+            i {
+                margin-right: 15px;
+            }
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+// CONTADOR CANTIDAD PRODUCTOS
+input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.number-input {
+    border: 2px solid #ddd;
+    display: inline-flex;
+    button {
+        outline:none;
+        -webkit-appearance: none;
+        background-color: transparent;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        cursor: pointer;
+        margin: 0;
+        position: relative;
+        &:before,
+        &:after {
+            display: inline-block;
+            position: absolute;
+            content: '';
+            width: 0.7rem;
+            height: 2px;
+            background-color: #212121;
+            transform: translate(-50%, -50%);
+        }
+    }
+    & button.plus:after {
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+    input[type=number] {
+        font-family: sans-serif;
+        max-width: 4rem;
+        padding: .5rem;
+        border: solid #ddd;
+        border-width: 0 2px;
+        font-size: 1.2rem;
+        height: 2rem;
+        font-weight: bold;
+        text-align: center;
+    }
+}
+
+@media screen and (min-width: 650px){
+    .contenedor-detalle-producto {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(1, auto);
+        .detalle-producto {
+            align-self: center;
+        }
+    }
+}
+
+@media screen and (min-width: 850px){
+    .contenedor-detalle-producto {
+        width: 80%;
+        margin: 0 auto;
+    }
+}

@@ -1,0 +1,27 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+  
+ul {
+    list-style: none;
+}
+
+body {
+    padding-top: 84px;
+    background-color:  rgb(247, 247, 234);
+}
+
+@import './variables.scss';
+@import './header.scss';
+@import './modal.scss';
+@import './card.scss';
+@import './index.scss';
+@import './producto.scss';
+@import './productos.scss';
+@import './sidebar.scss';
+@import './iconowts.scss';
+@import './footer.scss'

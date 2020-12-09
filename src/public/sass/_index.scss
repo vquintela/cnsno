@@ -1,0 +1,55 @@
+.titulo-destacados,
+.titulo-varios {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: $celeste;
+    .titulo-contenido {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        h4 {
+            color: white;
+            text-transform: uppercase;
+            font-weight: bolder;
+            font-size: 1.2rem;
+            margin: 0;
+            padding: 20px 10px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            &::after {
+                margin-left: 15px;
+                width: 100%;
+                text-align: center;
+                content: "";
+                height: 3px;
+                background-color: $rosa;
+            }
+        }
+        &::before {
+            width: 6px;
+            content: "";
+            height: 35px;
+            background-color: $rosa;
+            margin-left: 10px;
+        }
+        i {
+            font-size: 1.5rem;
+            color: $rosa;
+            margin-right: 10px;
+        }
+    }
+}
+
+@media screen and (min-width: 850px){
+    .titulo-contenido {
+        width: 90%;
+        max-width: 1000px;
+        margin: 0 auto;
+        h4 {
+            font-size: 1.8rem;
+        }
+    }
+}

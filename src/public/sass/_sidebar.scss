@@ -1,0 +1,25 @@
+/* DROPDOWN SIDEBAR */
+.productos-menu {
+	cursor: pointer;
+	overflow: hidden;
+}
+
+.contenedor-menu {
+	overflow: hidden;
+    .menu-desp {
+        display: none;
+        animation: sidebar 0.5s;
+    }
+    
+    .menu-show {
+        overflow: hidden;
+        display: block;
+    }
+    @keyframes sidebar {
+        0% {
+            transform: translateY(-101%);
+        }
+    }
+}
+
+

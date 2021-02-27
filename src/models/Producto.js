@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../lib/sequelize');
+const mensaje = require('../lib/errorMessageValidation');
+const imagenes = require('../lib/imagenes');
 // const Itemventa = require('./Itemventa');
 
 const Producto = sequelize.define('producto', {
@@ -52,7 +54,7 @@ const Producto = sequelize.define('producto', {
             }
         }
     },
-    image: {
+    imagen: {
         type: Sequelize.TEXT,
         validate: {
             notEmpty: {
@@ -60,7 +62,7 @@ const Producto = sequelize.define('producto', {
             }
         }
     },
-    stock: {
+    cantidad: {
         type: Sequelize.INTEGER,
         validate: {
             notEmpty: {
@@ -90,11 +92,6 @@ const Producto = sequelize.define('producto', {
     },
     estado: {
         type: Sequelize.BOOLEAN,
-        validate: {
-            notEmpty: {
-                msg: 'No se permiten campos vacios'
-            }
-        },
         defaultValue: true
     }
 }, {
@@ -111,4 +108,62 @@ const Producto = sequelize.define('producto', {
 //     console.log('tabla creada')
 // })
 
-module.exports = Producto;
+const addProducto = async (values) => {
+    try {
+        await Producto.create({...values, estado: true});
+        return 1
+    } catch (error) {
+        return mensaje.crearMensajeObj(error);
+    }
+}
+
+const getProductos = async () => {
+    try {
+        let consulta = '';
+        const productos = await Producto.findAll({where: {...consulta}});
+        return productos;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getProducto = async (id) => {
+    try {
+        const producto = await Producto.findByPk(id);
+        return producto;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const editProducto = async (values, id) => {
+    try {
+        await Producto.update({ ...values }, {where: {id: id}});
+        return 1;
+    } catch (error) {
+        return -1;
+    }
+}
+
+const deleteProducto = async (id) => {
+    try {
+        const prod = await Producto.findByPk(id);
+        await prod.destroy();
+        await imagenes.borrarCarpeta(prod.imagen)
+        return 1;
+    } catch (error) {
+        return -1;
+    }
+}
+
+const estadoProducto = async (id) => {
+    try {
+        let producto = await Producto.findByPk(id);
+        await producto.update({ estado: !producto.estado });
+        return 1;
+    } catch (error) {
+        return mensaje.crearMensaje(error);
+    }
+}
+
+module.exports = {Producto, addProducto, getProductos, getProducto, editProducto, deleteProducto, estadoProducto};

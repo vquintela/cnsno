@@ -1,4 +1,3 @@
-const Categoria = require('../../models/Categoria');
 const Categorias = require('../../models/Categoria');
 
 const getCategorias = async (req, res) => {
@@ -50,7 +49,7 @@ const getCategoria = async (req, res) => {
     const padre = req.params.padre;
     const id = req.params.id;
     const [categoria, categorias] = await Promise.all([
-        Categoria.getCategoria(id),
+        Categorias.getCategoria(id),
         Categorias.getCategorias(filtro, padre),
     ]);
     let categoriaPadre = '';
@@ -93,11 +92,18 @@ const estadoCategoria = async (req, res) => {
     res.status(200).json('ok')
 }
 
+const subcat = async (req, res) => {
+    const id = req.params.id;
+    const resp = await Categorias.getCategorias('', id);
+    res.status(200).json(resp)
+}
+
 module.exports = { 
     getCategorias, 
     addCategoria, 
     deleteCategoria, 
     getCategoria, 
     editCategoria, 
-    estadoCategoria 
+    estadoCategoria,
+    subcat
 }

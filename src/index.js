@@ -22,7 +22,7 @@ app.engine('.hbs', exphbs({
     helpers: require('./lib/handlebars')
 }));
 app.set('view engine', '.hbs');
-app.use(multer({dest: path.join(__dirname, 'public/img')}).single('image'));
+app.use(multer({dest: path.join(__dirname, 'public/img')}).array('imagen', 5));
 
 //Middlewares
 app.use(session({

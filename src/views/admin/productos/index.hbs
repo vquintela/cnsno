@@ -8,9 +8,9 @@
             <div class="d-flex ml-auto align-items-center col-md-6">
                 <select class="form-control mr-4 categoria-buscar">
                     <option value="">Categoria</option>
-                    {{!-- {{#each catPadre}}
-                    <option value="{{this._id}}" {{#if (estado @root.actualCategoria this._id) }}selected{{/if}}>{{this.nombre}}</option>
-                    {{/each}} --}}
+                    {{#each catPadre}}
+                    <option value="{{this.id}}" {{#if (estado @root.actualCategoria this._id) }}selected{{/if}}>{{this.nombre}}</option>
+                    {{/each}}
                 </select>
                 <select class="form-control mr-4 subCat-buscar">
                     <option value="">Subcategoria</option>
@@ -18,7 +18,7 @@
                     <option value="{{this._id}}" {{#if (estado @root.actualSubCategoria this._id) }}selected{{/if}}>{{this.nombre}}</option>
                     {{/each}} --}}
                 </select>
-                <a class="btn btn-block btn-primary mr-2 btn-sm" href="/productos/crear"><i class="fas fa-tasks text-white"></i>
+                <a class="btn btn-block btn-primary mr-2 btn-sm" href="/admin/productos/crear"><i class="fas fa-tasks text-white"></i>
                     Crear</a>
             </div>
         </div>
@@ -29,8 +29,6 @@
                         <tr>
                             <th scope="col">Imagen</th>
                             <th scope="col">Nombre</th>
-                            <th scope="col">Marca</th>
-                            <th scope="col">Modelo</th>
                             <th scope="col">Precio</th>
                             <th scope="col">Cantidad</th>
                             <th scope="col">Destacado</th>
@@ -42,11 +40,11 @@
                         {{#each productos}}
                         <tr style="height: 70px;">
                             <th>
-                                <img src="/img/{{imagen}}" alt="img" class="img-fluid" style="width: 40px;">
+                                {{#each imgs}}
+                                <img src="/img/{{this}}" alt="img" class="img-fluid" style="width: 40px;">
+                                {{/each}}
                             </th>
                             <th>{{nombre}}</th>
-                            <th>{{marca_id.marca}}</th>
-                            <th>{{modelo}}</th>
                             <th>{{precio}}</th>
                             <th>{{cantidad}}</th>
                             <th>
@@ -57,37 +55,28 @@
                                 {{/if}}
                             </th>
                             <th>
-                                {{#if marca_id.estado}}
-                                    {{#if estado}}
-                                    <button class="btn btn-sm btn-outline-danger estado" data-id="{{_id}}"
-                                        estado-producto={{estado}}>
-                                        Deshabilitar
-                                    </button>
-                                    {{else}}
-                                    <button class="btn btn-sm btn-outline-primary estado" data-id="{{_id}}"
-                                        estado-producto={{estado}}>
-                                        Habilitar
-                                    </button>
-                                    {{/if}}
+                                {{#if estado}}
+                                <button class="btn btn-sm btn-outline-danger estado" data-id="{{id}}"
+                                    estado-producto={{estado}}>
+                                    Deshabilitar
+                                </button>
                                 {{else}}
-                                <a href="/marcas" class="btn btn-sm btn-outline-warning">
-                                Marca Desactivada
-                                </a>
+                                <button class="btn btn-sm btn-outline-primary estado" data-id="{{id}}"
+                                    estado-producto={{estado}}>
+                                    Habilitar
+                                </button>
                                 {{/if}}
+                                
                             </th>
                             <th>
-                                <a class="btn btn-sm btn-success" href="/productos/{{_id}}">
+                                <a class="btn btn-sm btn-success" href="/admin/productos/editar/{{id}}">
                                     <i class="fas fa-pen"></i>
                                     Editar
                                 </a>
-                                <button class="btn btn-sm btn-danger eliminar" data-id="{{_id}}">
+                                <button class="btn btn-sm btn-danger eliminar" data-id="{{id}}">
                                     <i class="fas fa-trash-alt"></i>
                                     Eliminar
                                 </button>
-                                <a class="btn btn-sm btn-primary" href="/productos/{{_id}}">
-                                    <i class="fas fa-comments"></i>
-                                    Comentarios
-                                </a>
                             </th>
                         </tr>
                         {{else}}

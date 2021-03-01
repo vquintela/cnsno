@@ -1,8 +1,9 @@
 const Sequelize = require('sequelize');
+const { Op } = require("sequelize");
 const sequelize = require('../lib/sequelize');
 const mensaje = require('../lib/errorMessageValidation');
 const imagenes = require('../lib/imagenes');
-// const { Categoria } = require('./Categoria');
+const { Categoria } = require('./Categoria');
 // const Itemventa = require('./Itemventa');
 
 const Producto = sequelize.define('producto', {
@@ -101,6 +102,8 @@ const Producto = sequelize.define('producto', {
 
 // Producto.hasMany(Itemventa, { foreignKey: 'id_producto', sourceKey: 'id' })
 // Itemventa.belongsTo(Producto, { foreignKey: 'id_producto', sourceKey: 'id' })
+Categoria.hasMany(Producto, { foreignKey: 'id_categoria', sourceKey: 'id', as: 'producto' })
+Producto.hasOne(Categoria, { foreignKey: 'id', sourceKey: 'id_categoria', as: 'categoria' })
 
 // Producto.sync({
 //     force: true
@@ -118,12 +121,21 @@ const addProducto = async (values) => {
     }
 }
 
-const getProductos = async () => {
+const getProductos = async (id) => {
+    const consulta = id ? { [Op.or]: [{id: id}, { categoriaPadre: id }] } : '';
     try {
-        let consulta = '';
-        const productos = await Producto.findAll(
-        {include: ["categoria"]}
-        );
+        const productos = await Producto.findAll({
+            include: [
+                {
+                    model: Categoria,
+                    as: 'categoria',
+                    required : true,
+                    where: {
+                        ...consulta
+                    }
+                }
+            ]
+        });
         return productos;
     } catch (error) {
         console.log(error)

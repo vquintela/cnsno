@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../lib/sequelize');
-const { Producto } = require('./Producto');
+// const { Producto } = require('./Producto');
 const mensaje = require('../lib/errorMessageValidation');
 
 const Categoria = sequelize.define('categoria', {
@@ -51,8 +51,8 @@ const Categoria = sequelize.define('categoria', {
     timestamps: false
 });
 
-Categoria.hasMany(Producto, { foreignKey: 'id_categoria', sourceKey: 'id', as: 'producto' })
-Producto.belongsTo(Categoria, { foreignKey: 'id_categoria', sourceKey: 'id', as: 'categoria' })
+// Categoria.hasMany(Producto, { foreignKey: 'id_categoria', sourceKey: 'id', as: 'producto' })
+// Producto.belongsTo(Categoria, { foreignKey: 'id_categoria', sourceKey: 'id', as: 'categoria' })
 
 // Categoria.sync({
 //     force: true

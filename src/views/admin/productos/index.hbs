@@ -9,14 +9,14 @@
                 <select class="form-control mr-4 categoria-buscar">
                     <option value="">Categoria</option>
                     {{#each catPadre}}
-                    <option value="{{this.id}}" {{#if (estado @root.actualCategoria this._id) }}selected{{/if}}>{{this.nombre}}</option>
+                    <option value="{{this.id}}" {{#if (estado @root.actualCategoria this.id) }}selected{{/if}}>{{this.nombre}}</option>
                     {{/each}}
                 </select>
                 <select class="form-control mr-4 subCat-buscar">
                     <option value="">Subcategoria</option>
-                    {{!-- {{#each subCat}}
-                    <option value="{{this._id}}" {{#if (estado @root.actualSubCategoria this._id) }}selected{{/if}}>{{this.nombre}}</option>
-                    {{/each}} --}}
+                    {{#each subCat}}
+                    <option value="{{this.id}}" {{#if (estado @root.actualSubCategoria this.id) }}selected{{/if}}>{{this.nombre}}</option>
+                    {{/each}}
                 </select>
                 <a class="btn btn-block btn-primary mr-2 btn-sm" href="/admin/productos/crear"><i class="fas fa-tasks text-white"></i>
                     Crear</a>

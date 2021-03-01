@@ -5,16 +5,22 @@ const fse = require('fs-extra');
 const path = require('path');
 
 const getProductos = async (req, res) => {
-    const productos = await Producto.getProductos();
+    let subCat;
+    const idCat = req.query.subCat || req.query.categoria;
+    const productos = await Producto.getProductos(idCat);
     const prodImg = productos.map(producto => {
         const imagenes = fse.readdirSync(path.join(`src/public/img/${producto.imagen}`));
         const imgs = imagenes.map(img => `${producto.imagen}/${img}`);
         return {...producto.dataValues, imgs}
     });
+    if(req.query.categoria) subCat = await Categoria.getCategorias('', req.query.categoria);
     const catPadre = await Categoria.getCategorias('', 0);
     res.render('admin/productos', {
         productos: prodImg,
-        catPadre: catPadre.map(cat => cat.toJSON())
+        catPadre: catPadre.map(cat => cat.toJSON()),
+        subCat: subCat ? subCat.map(cat => cat.toJSON()) : '',
+        actualCategoria: req.query.categoria || '',
+        actualSubCategoria: req.query.subCat || ''
     });
 }
 

@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../lib/sequelize');
 const mensaje = require('../lib/errorMessageValidation');
 const imagenes = require('../lib/imagenes');
+// const { Categoria } = require('./Categoria');
 // const Itemventa = require('./Itemventa');
 
 const Producto = sequelize.define('producto', {
@@ -120,7 +121,9 @@ const addProducto = async (values) => {
 const getProductos = async () => {
     try {
         let consulta = '';
-        const productos = await Producto.findAll({where: {...consulta}});
+        const productos = await Producto.findAll(
+        {include: ["categoria"]}
+        );
         return productos;
     } catch (error) {
         console.log(error)

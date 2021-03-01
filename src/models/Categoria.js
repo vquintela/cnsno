@@ -51,8 +51,8 @@ const Categoria = sequelize.define('categoria', {
     timestamps: false
 });
 
-Categoria.hasMany(Producto, { foreignKey: 'id_categoria', sourceKey: 'id' })
-Producto.belongsTo(Categoria, { foreignKey: 'id_categoria', sourceKey: 'id' })
+Categoria.hasMany(Producto, { foreignKey: 'id_categoria', sourceKey: 'id', as: 'producto' })
+Producto.belongsTo(Categoria, { foreignKey: 'id_categoria', sourceKey: 'id', as: 'categoria' })
 
 // Categoria.sync({
 //     force: true

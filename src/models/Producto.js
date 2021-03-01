@@ -121,10 +121,10 @@ const addProducto = async (values) => {
     }
 }
 
-const getProductos = async (id) => {
+const getProductos = async (id, porPagina, porPaginaActual) => {
     const consulta = id ? { [Op.or]: [{id: id}, { categoriaPadre: id }] } : '';
     try {
-        const productos = await Producto.findAll({
+        const productos = await Producto.findAndCountAll({
             include: [
                 {
                     model: Categoria,
@@ -134,7 +134,9 @@ const getProductos = async (id) => {
                         ...consulta
                     }
                 }
-            ]
+            ],
+            limit: porPagina,
+            offset: porPaginaActual
         });
         return productos;
     } catch (error) {
@@ -181,4 +183,12 @@ const estadoProducto = async (id) => {
     }
 }
 
-module.exports = {Producto, addProducto, getProductos, getProducto, editProducto, deleteProducto, estadoProducto};
+module.exports = {
+    Producto, 
+    addProducto, 
+    getProductos, 
+    getProducto, 
+    editProducto, 
+    deleteProducto, 
+    estadoProducto,
+};

@@ -8,7 +8,7 @@ const eliminar = async (e) => {
     const res = await modal('Eliminar Producto', '¿Desea Eliminar este Producto?')
     if (res) {
         const resp = await fetch(`/admin/productos/eliminar/${id}`, { method: 'DELETE'});
-        if (resp.ok) location.href = '/admin/productos'
+        if (resp.ok) location.href = '/admin/productos/1'
     }
 }
 
@@ -22,7 +22,7 @@ const estado = async (e) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({estado})
         });
-        if (resp.ok) location.href = '/admin/productos'
+        if (resp.ok) location.href = '/admin/productos/1'
     }
 }
 
@@ -30,6 +30,5 @@ const filtrar = () => {
     const categoria = document.querySelector('.categoria-buscar').value;
     let subCat = document.querySelector('.subCat-buscar').value;
     if (!categoria) subCat = '';
-    // location.href = `/admin/productos/1?categoria=${categoria}&subCat=${subCat}`;
-    location.href = `/admin/productos?categoria=${categoria}&subCat=${subCat}`;
+    location.href = `/admin/productos/1?categoria=${categoria}&subCat=${subCat}`;
 }

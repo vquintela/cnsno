@@ -1,7 +1,7 @@
 <div class="col-md-2 border-right sidebar bg-white m-0">
     <h3 class="text-center pt-3 text-primary">{{user.nombre}}</h3>
     <div class="ml-2 pt-2">
-        <a class="text-decoration-none text-dark" href="/dashboard">
+        <a class="text-decoration-none text-dark" href="/admin/dashboard">
             <h4><i class="fas fa-id-badge pr-2"></i>Perfil</h4>
         </a>
     </div>
@@ -12,7 +12,7 @@
             <div class="menu-desp">
                 <hr>
                 <div>
-                    <a class="text-decoration-none text-dark" href="/venta/1">
+                    <a class="text-decoration-none text-dark" href="/admin/venta/1">
                         <h6><i class="fas fa-list-ul pr-2"></i>Ver Pagos</h6>
                     </a>
                 </div>
@@ -27,13 +27,13 @@
             <div class="menu-desp">
                 <hr>
                 <div>
-                    <a class="text-decoration-none text-dark" href="/productos/todos/1">
+                    <a class="text-decoration-none text-dark" href="/admin/productos/1">
                         <h6><i class="fas fa-list-ul pr-2"></i>Ver Productos</h6>
                     </a>
                 </div>
                 <hr>
                 <div>
-                    <a class="text-decoration-none text-dark" href="/productos/crear">
+                    <a class="text-decoration-none text-dark" href="/admin/productos/crear">
                         <h6><i class="far fa-plus-square pr-2"></i>Crear Producto</h6>
                     </a>
                 </div>
@@ -47,7 +47,7 @@
             <div class="menu-desp">
                 <hr>
                 <div>
-                    <a class="text-decoration-none text-dark" href="/categorias">
+                    <a class="text-decoration-none text-dark" href="/admin/categorias/0">
                         <h6><i class="fas fa-list-ul pr-2"></i>Ver Categorías</h6>
                     </a>
                 </div>
@@ -63,20 +63,20 @@
 {{!-- {{#if (estado user.rol 'administrador')}} --}}
                 <hr>
                 <div>
-                    <a class="text-decoration-none text-dark" href="/users">
+                    <a class="text-decoration-none text-dark" href="/admin/users">
                         <h6><i class="fas fa-users pr-2"></i>Ver Usuarios</h6>
                     </a>
                 </div>
                 <hr>
                 <div>
-                    <a class="text-decoration-none text-dark" href="/users/crear">
+                    <a class="text-decoration-none text-dark" href="/admin/users/crear">
                         <h6><i class="fas fa-user-plus pr-2"></i>Crear Usuario</h6>
                     </a>
                 </div>
 {{!-- {{/if}} --}}
                 <hr>
                 <div>
-                    <a class="text-decoration-none text-dark" href="/users/newpws">
+                    <a class="text-decoration-none text-dark" href="/admin/users/newpws">
                         <h6><i class="fas fa-user-edit pr-2"></i>Cambiar Password</h6>
                     </a>
                 </div>

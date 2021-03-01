@@ -5,10 +5,13 @@ const fse = require('fs-extra');
 const path = require('path');
 
 const getProductos = async (req, res) => {
+    const porPagina = 2;
+    const pagina = req.params.pagina || 1;
+    const porPaginaActual = ((porPagina * pagina) - porPagina);
     let subCat;
     const idCat = req.query.subCat || req.query.categoria;
-    const productos = await Producto.getProductos(idCat);
-    const prodImg = productos.map(producto => {
+    const productos = await Producto.getProductos(idCat, porPagina, porPaginaActual);
+    const prodImg = productos.rows.map(producto => {
         const imagenes = fse.readdirSync(path.join(`src/public/img/${producto.imagen}`));
         const imgs = imagenes.map(img => `${producto.imagen}/${img}`);
         return {...producto.dataValues, imgs}
@@ -20,7 +23,9 @@ const getProductos = async (req, res) => {
         catPadre: catPadre.map(cat => cat.toJSON()),
         subCat: subCat ? subCat.map(cat => cat.toJSON()) : '',
         actualCategoria: req.query.categoria || '',
-        actualSubCategoria: req.query.subCat || ''
+        actualSubCategoria: req.query.subCat || '',
+        paginacion: Math.ceil(productos.count / porPagina),
+        actual: pagina,
     });
 }
 
@@ -107,7 +112,7 @@ const editProducto = async (req, res) => {
     if (prod === 1) {
         if (resp != -1) await imagenes.borrarCarpeta(oldImg);
         req.flash('success', 'Producto Editado');
-        res.redirect('/admin/productos');
+        res.redirect('/admin/productos/1');
         return
     } else {
         if (resp != -1) await imagenes.borrarCarpeta(values.imagen);

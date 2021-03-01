@@ -4,9 +4,9 @@ const productos = require('../controller/admin/productoController');
 const categorias = require('../controller/admin/categoriaController');
 
 // PRODUCTOS
-router.get('/productos', productos.getProductos)
 router.get('/productos/crear', productos.crearProducto);
 router.post('/productos/crear', productos.addProductos);
+router.get('/productos/:pagina', productos.getProductos);
 router.get('/productos/editar/:id', productos.getProducto);
 router.post('/productos/editar/:id', productos.editProducto);
 router.delete('/productos/eliminar/:id', productos.deleteProducto);

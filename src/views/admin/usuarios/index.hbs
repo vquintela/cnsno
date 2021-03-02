@@ -1,0 +1,54 @@
+<div class="row w-100">
+    {{>sidebar}}
+    <div class="col-md-10">
+        <div class="d-flex align-items-center mt-3">
+            <div>
+                <h3 class="pl-5">USUARIOS</h3>
+            </div>
+            <div class="d-flex ml-auto align-items-center">
+                <a class="btn btn-block btn-primary mr-2" href="/admin/users/crear"><i class="fas fa-tasks text-white"></i>
+                    Crear</a>
+            </div>
+        </div>
+        <div class="p-4" id="contenedor">
+            <div class="row justify-content-betwen" id="App">
+                <table class="table text-center" id="filas">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="insertar-filas">
+                        {{#each usuarios}}
+                        <tr>
+                            <th>{{id}}</th>
+                            <th>{{nombre}}</th>
+                            <th>{{apellido}}</th>
+                            <th>{{email}}</th>
+                            <th>
+                                <a class="btn btn-sm btn-success" href="/admin/users/editar/{{id}}">
+                                    <i class="fas fa-pen"></i>
+                                    Editar
+                                </a>
+                                <button class="btn btn-sm btn-danger eliminar" data-id="{{id}}">
+                                    <i class="fas fa-trash-alt"></i>
+                                    Eliminar
+                                </button>
+                            </th>
+                        </tr>
+                        {{else}}
+                        <tr>
+                            <p>No hay Usuarios</p>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="module" src="/js/usuarios-view.js"></script>

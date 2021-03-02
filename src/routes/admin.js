@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const productos = require('../controller/admin/productoController');
 const categorias = require('../controller/admin/categoriaController');
+const usuarios = require('../controller/admin/usuarioController');
 
 // PRODUCTOS
 router.get('/productos/crear', productos.crearProducto);
@@ -20,5 +21,12 @@ router.get('/categorias/:padre/editar/:id', categorias.getCategoria);
 router.post('/categorias/:padre/editar/:id', categorias.editCategoria);
 router.put('/categorias/estado/:id', categorias.estadoCategoria);
 router.get('/categorias/subcat/:id', categorias.subcat);
+
+// USUARIOS
+router.get('/users', usuarios.getUsuarios);
+router.get('/users/crear', usuarios.addUsuarios);
+router.post('/users/crear', usuarios.crearUsuarios);
+router.delete('/users/eliminar/:id', usuarios.deleteUsuario);
+router.get('/users/editar/:id', usuarios.getUsuario);
 
 module.exports = router;

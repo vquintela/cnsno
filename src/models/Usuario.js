@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../lib/sequelize');
 const bcrypt = require('bcrypt');
+const mensaje = require('../lib/errorMessageValidation');
+const { where } = require('sequelize');
 
 const hashPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
@@ -86,4 +88,43 @@ Usuario.beforeCreate(async (usuario, options) => {
 //     console.log('tabla creada')
 // })
 
-module.exports = Usuario;
+const getUsuarioEmail = async (email) => {
+    const user = await Usuario.findOne({where: {email: email}});
+    return user;
+}
+
+const getUserPK = async (id) => {
+    const user = await Usuario.findByPk(id);
+    return user;
+}
+
+const getUsuarios = async () => {
+    const users = await Usuario.findAll();
+    return users;
+}
+
+const addUsuarios = async (values) => {
+    try {
+        await Usuario.create({...values});
+        return 1;   
+    } catch (error) {
+        return mensaje.crearMensajeObj(error);
+    }
+}
+
+const deleteUsuario = async (id) => {
+    try {
+        await Usuario.destroy({where: {id: id}});
+        return 1;
+    } catch (error) {
+        return -1;
+    }
+}
+
+module.exports = {
+    getUsuarioEmail,
+    getUserPK,
+    getUsuarios,
+    addUsuarios,
+    deleteUsuario
+}

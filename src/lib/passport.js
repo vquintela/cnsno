@@ -8,7 +8,7 @@ passport.use('local.signin', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
-    const user = await Usuario.findOne({where: {email: email}});
+    const user = await Usuario.getUsuarioEmail(email);
     if(user){
         const validPassword = await helpers.matchPassword(password, user.password);
         if(validPassword) {
@@ -26,6 +26,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-    const user = await (await Usuario.findByPk(id)).toJSON()
+    const user = await (await Usuario.getUserPK(id)).toJSON()
     done(null, user);
 });

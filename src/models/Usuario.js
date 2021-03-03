@@ -121,10 +121,30 @@ const deleteUsuario = async (id) => {
     }
 }
 
+const editPass = async (newPass, id) => {
+    try {
+        await Usuario.update({ password: newPass }, {where: {id: id}});
+        return 1
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const editUsuario = async (values, id) => {
+    try {
+        await Usuario.update({ ...values }, {where: {id: id}});
+        return 1;
+    } catch (error) {
+        return mensaje.crearMensajeObj(error);
+    }
+}
+
 module.exports = {
     getUsuarioEmail,
     getUserPK,
     getUsuarios,
     addUsuarios,
-    deleteUsuario
+    deleteUsuario,
+    editPass,
+    editUsuario
 }

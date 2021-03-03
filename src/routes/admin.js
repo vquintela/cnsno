@@ -28,5 +28,8 @@ router.get('/users/crear', usuarios.addUsuarios);
 router.post('/users/crear', usuarios.crearUsuarios);
 router.delete('/users/eliminar/:id', usuarios.deleteUsuario);
 router.get('/users/editar/:id', usuarios.getUsuario);
+router.post('/users/editar/:id', usuarios.editUsuario);
+router.get('/users/newpws', usuarios.newPws);
+router.post('/users/newpws', usuarios.saveNewPws);
 
 module.exports = router;

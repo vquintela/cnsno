@@ -1,4 +1,5 @@
 const Usuario = require('../../models/Usuario');
+const helperPws = require('../../lib/password');
 
 const getUsuarios = async (req, res) => {
     const usuarios = await Usuario.getUsuarios();
@@ -49,10 +50,71 @@ const getUsuario = async (req, res) => {
     })
 }
 
+const editUsuario = async (req, res) => {
+    const { id, nombre, apellido, email, password } = req.body;
+    const values = {
+        nombre,
+        apellido,
+        email 
+    }
+    if (password) values.password = await helperPws.encryptPassword(password);
+    const resp = await Usuario.editUsuario(values, id);
+    if (resp === 1) {
+        req.flash('success', 'Usuario editado de forma correcta');
+        res.redirect('/admin/users'); 
+    } else {
+        res.render('admin/usuarios/crear', {
+            titulo: 'Editar Usuario',
+            boton: 'Editar',
+            action: `/admin/users/editar/${req.params.id}`,
+            error: 'Ocurrio un error en la edicion',
+            e: resp,
+            user: values
+        });
+    }
+}
+
+const newPws = async (req, res) => {
+    res.render('admin/usuarios/newpws');
+}
+
+const saveNewPws = async (req, res) => {
+    const { id, passwordActual, nuevaPass, repNuevaPass } = req.body
+    if(!passwordActual.trim() || !nuevaPass.trim() || !repNuevaPass.trim()) {
+        req.flash('error', 'Debe ingresar todos los campos')
+        res.redirect('/admin/users/newpws')
+        return
+    }
+    if(nuevaPass !== repNuevaPass) { 
+        req.flash('error', 'Las contraseñas no coinciden')
+        res.redirect('/admin/users/newpws')
+        return
+    }
+    const user = await Usuario.getUserPK(id);
+    const value = await helperPws.matchPassword(passwordActual, user.password)
+    if(value) {
+        try {
+            const newPass = await helperPws.encryptPassword(nuevaPass)
+            await Usuario.editPass(newPass, id);
+            res.redirect('/logout')
+            return
+        } catch (error) {
+            console.log(error)
+        }
+    } else {
+        req.flash('error', 'Password incorrecta')
+        res.redirect('/admin/users/newpws')
+        return
+    }
+}
+
 module.exports = {
     getUsuarios,
     addUsuarios,
     crearUsuarios,
     deleteUsuario,
-    getUsuario
+    getUsuario,
+    newPws,
+    saveNewPws,
+    editUsuario
 }

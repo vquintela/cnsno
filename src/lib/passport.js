@@ -14,10 +14,10 @@ passport.use('local.signin', new LocalStrategy({
         if(validPassword) {
             done(null, user, req.flash('success', 'Bienvenido ' + user.nombre));
         } else {
-            done(null, false, req.flash('message', 'Usuario o Password Incorrecta'));
+            done(null, false, req.flash('error', 'Usuario o Password Incorrecta'));
         }
     } else {
-        done(null, false, req.flash('message', 'Usuario o Password Incorrecta'));
+        done(null, false, req.flash('error', 'Usuario o Password Incorrecta'));
     }
 }));
 

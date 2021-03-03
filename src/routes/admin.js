@@ -3,6 +3,7 @@ const router = express.Router();
 const productos = require('../controller/admin/productoController');
 const categorias = require('../controller/admin/categoriaController');
 const usuarios = require('../controller/admin/usuarioController');
+const auth = require('../controller/admin/authController');
 
 // PRODUCTOS
 router.get('/productos/crear', productos.crearProducto);
@@ -31,5 +32,10 @@ router.get('/users/editar/:id', usuarios.getUsuario);
 router.post('/users/editar/:id', usuarios.editUsuario);
 router.get('/users/newpws', usuarios.newPws);
 router.post('/users/newpws', usuarios.saveNewPws);
+
+// AUTH
+router.get('/signin', auth.signin);
+router.post('/signin', auth.login);
+router.get('/logout', auth.logout);
 
 module.exports = router;

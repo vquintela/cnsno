@@ -1,0 +1,1 @@
+const Venta = require('../../models/Venta');

@@ -71,6 +71,10 @@ const Usuario = sequelize.define('usuario', {
                 msg: 'La password no cumple los requisitos de seguridad'
             }
         }
+    },
+    rol: {
+        type: Sequelize.ENUM,
+        values: ['cliente', 'admin'],
     }
 }, {
     timestamps: false
@@ -81,12 +85,12 @@ Usuario.beforeCreate(async (usuario, options) => {
     usuario.password = hashedPassword;
 })
 
-// Usuario.sync({
-//     force: true
-// })
-// .then(() => {
-//     console.log('tabla creada')
-// })
+Usuario.sync({
+    force: true
+})
+.then(() => {
+    console.log('tabla creada')
+})
 
 const getUsuarioEmail = async (email) => {
     const user = await Usuario.findOne({where: {email: email}});

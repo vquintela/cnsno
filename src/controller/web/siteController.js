@@ -1,5 +1,7 @@
 const getIndex = (req, res) => {
-    res.render('web/');
+    res.render('web/', {
+        layout: 'web'
+    });
 }
 
 const getProducto = (req, res) => {

@@ -6,6 +6,13 @@ module.exports = {
         return res.redirect('signin');
     },
 
+    isAdmin(req, res, next) {
+        if(req.isAuthenticated() && req.user.rol === 'admin') {
+            return next();
+        }
+        return res.redirect('signin');
+    },
+
     isNotLoggedIn(req, res, next) {
         if(!req.isAuthenticated()) {
             return next();

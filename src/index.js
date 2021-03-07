@@ -6,6 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const multer = require('multer');
+const { isAdmin } = require('./lib/auth');
 
 //Iniciar Servidor
 const app = express();
@@ -47,10 +48,6 @@ app.use((req, res, next) => {
 });
 
 //Routes
-// app.use('/productos', require('./routes/productos'));
-// app.use('/categorias', require('./routes/categorias'));
-// app.use('/usuarios', require('./routes/usuarios'));
-// app.use(require('./routes/auth'));
 app.use(require('./routes/index'));
 app.use('/admin', require('./routes/admin'));
 

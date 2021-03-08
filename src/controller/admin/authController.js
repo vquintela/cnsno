@@ -27,11 +27,24 @@ const authGoogle = (req, res, next) => {
 
 const callbackGoogle = async (req, res, next) => {
     passport.authenticate( 'google', {
-        successRedirect: '/',
+        successRedirect: '/cliente',
         failureRedirect: '/auth/google/failure',
     })(req, res, next);
 }
 
+// FACEBOOK SIGNIN
+const authFacebook = async (req, res, next) => {
+    passport.authenticate('facebook')(req, res, next);
+}
+
+const callbackFacebook = async (req, res, next) => {
+    passport.authenticate('facebook', { 
+        successRedirect: '/cliente',
+        failureRedirect: '/login' 
+    })(req, res, next);
+}
+
+// LOGOUT
 const logout = async (req, res) => {
     req.logOut();
     res.redirect('/signin');
@@ -42,5 +55,7 @@ module.exports = {
     login,
     logout,
     authGoogle,
-    callbackGoogle
+    callbackGoogle,
+    authFacebook,
+    callbackFacebook
 }

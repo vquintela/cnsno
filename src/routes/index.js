@@ -22,5 +22,7 @@ router.post('/signin', auth.login);
 router.get('/logout', auth.logout);
 router.get('/auth/google', auth.authGoogle);
 router.get('/auth/google/callback', auth.callbackGoogle);
+router.get('/auth/facebook', auth.authFacebook);
+router.get('/auth/facebook/callback', auth.callbackFacebook);
 
 module.exports = router;

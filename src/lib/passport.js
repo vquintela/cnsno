@@ -1,10 +1,12 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const Usuario = require('../models/Usuario');
 const helpers = require('../lib/password');
-const { googleKeys } = require('./keys');
+const { googleKeys, facebookKeys } = require('./keys');
 
+// LOCAL SIGNIN
 passport.use('local.signin', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
@@ -23,6 +25,7 @@ passport.use('local.signin', new LocalStrategy({
     }
 }));
 
+// GOOGLE SIGIN
 passport.use(
   "google",
   new GoogleStrategy(
@@ -33,7 +36,6 @@ passport.use(
       passReqToCallback: true,
     },
     async (request, accessToken, refreshToken, profile, done) => {
-      console.log(profile);
       const data = {
         nombre: profile.given_name,
         apellido: profile.family_name,
@@ -41,12 +43,27 @@ passport.use(
         oauthId: profile.id,
       };
       const user = await Usuario.findOrCreate(data);
-      console.log(user)
       return done(null, user[0]);
     }
   )
 );
 
+// FACEBOOK SIGNIN
+passport.use('facebook', new FacebookStrategy({
+    clientID: facebookKeys.clientID,
+    clientSecret: facebookKeys.clientSecret,
+    callbackURL: "/auth/facebook/callback"
+  },
+  async (accessToken, refreshToken, profile, done) => {
+      console.log(profile)
+    // User.findOrCreate(..., asyn(err, user) {
+    //   if (err) { return done(err); }
+    //   done(null, user);
+    // });
+  }
+));
+
+// SERIALIZE AND DESERIALIZE USER
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });

@@ -2,7 +2,6 @@ const Sequelize = require('sequelize');
 const sequelize = require('../lib/sequelize');
 const bcrypt = require('bcrypt');
 const mensaje = require('../lib/errorMessageValidation');
-const { where } = require('sequelize');
 
 const hashPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
@@ -63,9 +62,9 @@ const Usuario = sequelize.define('usuario', {
     password: {
         type: Sequelize.TEXT,
         validate: {
-            notEmpty: {
-                msg: 'No se permiten campos vacios'
-            },
+            // notEmpty: {
+            //     msg: 'No se permiten campos vacios'
+            // },
             is: {
                 args: /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/g,
                 msg: 'La password no cumple los requisitos de seguridad'
@@ -75,6 +74,14 @@ const Usuario = sequelize.define('usuario', {
     rol: {
         type: Sequelize.ENUM,
         values: ['cliente', 'admin'],
+        validate: {
+            notEmpty: {
+                msg: 'No se permiten campos vacios'
+            }
+        }
+    },
+    oauthId: {
+        type: Sequelize.STRING
     }
 }, {
     timestamps: false
@@ -85,12 +92,12 @@ Usuario.beforeCreate(async (usuario, options) => {
     usuario.password = hashedPassword;
 })
 
-Usuario.sync({
-    force: true
-})
-.then(() => {
-    console.log('tabla creada')
-})
+// Usuario.sync({
+//     force: true
+// })
+// .then(() => {
+//     console.log('tabla creada')
+// })
 
 const getUsuarioEmail = async (email) => {
     const user = await Usuario.findOne({where: {email: email}});
@@ -143,6 +150,33 @@ const editUsuario = async (values, id) => {
     }
 }
 
+const getRoles = async () => {
+    const roles = Usuario.rawAttributes.rol.values;
+    return roles;
+}
+
+const getUSerOauth = async (oauthId) => {
+    const user = await Usuario.findOne({where: {oauthId: oauthId}});
+    return user;
+}
+
+const findOrCreate = async (user) => {
+    const usuario = await Usuario.findOrCreate({
+        where: {
+            oauthId: user.oauthId
+        },
+        defaults: {
+            oauthId: user.oauthId,
+            rol: 'cliente',
+            nombre: user.nombre,
+            apellido: user.apellido,
+            email: user.email,
+            password: 'Cnsno2021'
+        }
+    });
+    return usuario;
+}
+
 module.exports = {
     getUsuarioEmail,
     getUserPK,
@@ -150,5 +184,8 @@ module.exports = {
     addUsuarios,
     deleteUsuario,
     editPass,
-    editUsuario
+    editUsuario,
+    getRoles,
+    getUSerOauth,
+    findOrCreate
 }

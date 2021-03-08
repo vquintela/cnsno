@@ -22,6 +22,14 @@
                             <span class="text-danger">{{e.email}}</span>
                         </div>
                         <div class="form-group">
+                            <select id="rol" name="rol" class="form-control">
+                                <option value="0">Rol</option>
+                                {{#each roles as |item|}}
+                                <option value="{{item}}" {{#if (estado @root.user.rol item)}}selected{{/if}}>{{item}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <input type="password" name="password" id="password" placeholder="Password" class="form-control">
                             <span class="text-danger">{{e.password}}</span>
                         </div>

@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-body">
                     {{!-- <img src="/img/contacto.png" alt="Logo" class="card-img-top mx-auto m-2 rounded-circle w-50"> --}}
-                    <form action="/admin/signin" method="POST">
+                    <form action="/signin" method="POST">
                         <div class="form-group">
                             <input type="email" name="email" placeholder="Email" class="form-control">
                         </div>
@@ -19,6 +19,9 @@
                                 Ingresar
                             </button>
                         </div>
+                        <a class="btn btn-sm btn-success btn-block" href="/auth/google">
+                                Google
+                            </a>
                     </form>
                 </div>
             </div>

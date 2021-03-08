@@ -10,7 +10,7 @@ module.exports = {
         if(req.isAuthenticated() && req.user.rol === 'admin') {
             return next();
         }
-        return res.redirect('signin');
+        return res.redirect('/');
     },
 
     isNotLoggedIn(req, res, next) {

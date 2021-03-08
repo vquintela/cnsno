@@ -9,10 +9,12 @@ const getUsuarios = async (req, res) => {
 }
 
 const addUsuarios = async (req, res) => {
+    const roles = await Usuario.getRoles();
     res.render('admin/usuarios/crear', {
         titulo: 'Crear Usuario',
         boton: 'Crear',
-        action: '/admin/users/crear'
+        action: '/admin/users/crear',
+        roles: roles
     });
 }
 
@@ -42,11 +44,13 @@ const deleteUsuario = async (req, res) => {
 
 const getUsuario = async (req, res) => {
     const user = await Usuario.getUserPK(req.params.id);
+    const roles = await Usuario.getRoles();
     res.render('admin/usuarios/crear', {
         titulo: 'Editar Usuario',
         boton: 'Editar',
         action: `/admin/users/editar/${req.params.id}`,
-        user: user.toJSON()
+        user: user.toJSON(),
+        roles: roles
     })
 }
 

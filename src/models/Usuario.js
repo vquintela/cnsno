@@ -88,8 +88,10 @@ const Usuario = sequelize.define('usuario', {
 })
 
 Usuario.beforeCreate(async (usuario, options) => {
-    const hashedPassword = await hashPassword(usuario.password);
-    usuario.password = hashedPassword;
+    if(usuario.password) {
+        const hashedPassword = await hashPassword(usuario.password);
+        usuario.password = hashedPassword;
+    }
 })
 
 // Usuario.sync({
@@ -171,7 +173,7 @@ const findOrCreate = async (user) => {
             nombre: user.nombre,
             apellido: user.apellido,
             email: user.email,
-            password: 'Cnsno2021'
+            // password: 'Cnsno2021'
         }
     });
     return usuario;

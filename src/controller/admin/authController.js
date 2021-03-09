@@ -34,7 +34,9 @@ const callbackGoogle = async (req, res, next) => {
 
 // FACEBOOK SIGNIN
 const authFacebook = async (req, res, next) => {
-    passport.authenticate('facebook')(req, res, next);
+    passport.authenticate('facebook', {
+        scope: ['email', 'public_profile'], session : false
+    })(req, res, next);
 }
 
 const callbackFacebook = async (req, res, next) => {

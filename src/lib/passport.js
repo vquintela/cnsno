@@ -49,19 +49,28 @@ passport.use(
 );
 
 // FACEBOOK SIGNIN
-passport.use('facebook', new FacebookStrategy({
-    clientID: facebookKeys.clientID,
-    clientSecret: facebookKeys.clientSecret,
-    callbackURL: "/auth/facebook/callback"
-  },
-  async (accessToken, refreshToken, profile, done) => {
-      console.log(profile)
-    // User.findOrCreate(..., asyn(err, user) {
-    //   if (err) { return done(err); }
-    //   done(null, user);
-    // });
-  }
-));
+passport.use(
+  "facebook",
+  new FacebookStrategy(
+    {
+      clientID: facebookKeys.clientID,
+      clientSecret: facebookKeys.clientSecret,
+      callbackURL: "/auth/facebook/callback",
+      profileFields: ["id", "displayName", "name", "email"],
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      console.log(profile._json.id);
+      const data = {
+        nombre: profile._json.first_name,
+        apellido: profile._json.last_name,
+        email: profile._json.email,
+        oauthId: profile._json.id,
+      };
+      const user = await Usuario.findOrCreate(data);
+      return done(null, user[0]);
+    }
+  )
+);
 
 // SERIALIZE AND DESERIALIZE USER
 passport.serializeUser((user, done) => {

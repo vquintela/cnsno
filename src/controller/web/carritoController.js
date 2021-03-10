@@ -1,11 +1,13 @@
 const Carrito = require('../../models/Carrito');
+const Producto = require('../../models/Producto');
+const imagenes = require('../../lib/imagenes');
 
 const agregarItem = async (req, res) => {
   const productId = req.params.id;
-  const cantidad = req.params.cantidad;
+  const cantidad = req.params.cantidad || 1;
   try {
     const carrito = new Carrito(req.session.carrito ? req.session.carrito : {});
-    const producto = await Producto.findById({ _id: productId });
+    const producto = await Producto.getProducto(productId);
     if (producto.cantidad >= cantidad && cantidad > 0) {
       carrito.add(producto, productId, cantidad);
       req.session.carrito = carrito;
@@ -13,7 +15,7 @@ const agregarItem = async (req, res) => {
       res.redirect("/");
     } else {
       req.flash("danger", "Cantidad fuera de stock");
-      res.redirect("/ver/productId");
+      res.redirect("/producto/productId");
     }
   } catch (error) {
     req.flash("error", "Ocurrio un problema agregando el producto");
@@ -26,7 +28,7 @@ const reduceItem = (req, res) => {
   const cart = new Carrito(req.session.carrito ? req.session.carrito : {});
   cart.reduceByOne(productId);
   req.session.carrito = cart;
-  res.redirect("/carrito");
+  res.redirect("/cart");
 };
 
 const addItem = (req, res) => {
@@ -34,7 +36,7 @@ const addItem = (req, res) => {
   const cart = new Carrito(req.session.carrito ? req.session.carrito : {});
   cart.addByOne(productId);
   req.session.carrito = cart;
-  res.redirect("/carrito");
+  res.redirect("/cart");
 };
 
 const removeItem = (req, res) => {
@@ -43,17 +45,20 @@ const removeItem = (req, res) => {
   cart.removeItem(productId);
   req.session.carrito = cart;
   req.flash("success", "Producto eliminado correctamente");
-  res.redirect("/carrito");
+  res.redirect("/cart");
 };
 
 const verCarrito = (req, res) => {
   if (!req.session.carrito) {
-    return res.render("carrito/carrito", {
+    return res.render("web/carrito", {
       productos: null,
     });
   }
   const carrito = new Carrito(req.session.carrito);
-  res.render("carrito/carrito", {
+  let productos = carrito.generateArray();
+  productos = imagenes.carritoImagenes(productos);
+  console.log(productos);
+  res.render("web/carrito", {
     productos: carrito.generateArray(),
     precioTotal: carrito.totalPrice,
   });

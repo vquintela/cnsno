@@ -29,3 +29,17 @@ document.querySelector('.down').addEventListener('click', e => {
 document.querySelector('.plus').addEventListener('click', e => {
     e.target.parentNode.querySelector('input[type=number]').stepUp();
 });
+
+// CANTIDAD DE PRODUCTOS EN VISTA DE PRODUCTO
+const btnProd = document.querySelector('.boton-agregar-producto');
+if(btnProd) btnProd.addEventListener('click', e => {
+    const id = e.target.getAttribute('data-id');
+    const inputCantidad = document.querySelector('.cantidad-productos');
+    const maxCant = parseInt(inputCantidad.getAttribute('max'));
+    const cantidad = parseInt(inputCantidad.value);
+    if(cantidad > 0 && cantidad < maxCant) {
+        location.href = `/cart/agregar/${id}/${cantidad}`;
+    } else {
+        document.querySelector('.error-cantidad').innerText = `La cantidad tiene que ser mayor a cero y menor a ${maxCant}`;
+    }
+});

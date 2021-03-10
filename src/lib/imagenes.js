@@ -60,4 +60,13 @@ imagenes.cargarImagenesProducto = producto => {
     return prodImg;
 }
 
+imagenes.carritoImagenes = arrayProducto => {
+    const productos = arrayProducto.map(producto => {
+        const imagenes = fse.readdirSync(path.join(`src/public/img/${producto.item.imagen}`));
+        producto.item.imagenURL = `${producto.item.imagen}/${imagenes[0]}`;
+        return producto;
+    })
+    return productos;
+}
+
 module.exports = imagenes;

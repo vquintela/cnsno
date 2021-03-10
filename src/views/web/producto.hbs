@@ -28,14 +28,14 @@
             <h3>Cantidad:</h3>
             <div class="number-input">
                 <button class="down"></button>
-                <input class="quantity" min="1" name="quantity" value="1" type="number">
+                <input class="quantity cantidad-productos" min="1" name="quantity" value="1" type="number" max="{{producto.cantidad}}">
                 <button class="plus"></button>
             </div>
             <div class="pago-detalle-boton">
-                <a href="#">
+                <button href="/cart/add/{{producto.id}}" data-id="{{producto.id}}" class="boton-agregar-producto">
                     <i class="fas fa-cart-plus"></i>
                     lo quiero
-                </a>
+                </button>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="tarjeta-botones">
                     <a href="/producto/{{id}}"><i class="fas fa-plus-circle"></i>Ver</a>
-                    <a href=""><i class="fas fa-cart-plus"></i>Añadir</a>
+                    <a href="/cart/agregar/{{id}}/1"><i class="fas fa-cart-plus"></i>Añadir</a>
                 </div>
             </div>
         </div>

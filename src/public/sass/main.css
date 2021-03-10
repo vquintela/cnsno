@@ -488,8 +488,8 @@ body {
   margin: 20px auto;
 }
 
-.pago-detalle-producto .pago-detalle-boton a {
-  display: block;
+.pago-detalle-producto .pago-detalle-boton button {
+  width: 100%;
   background-color: #212121;
   border: none;
   color: white;
@@ -499,11 +499,11 @@ body {
   padding: 10px 0;
 }
 
-.pago-detalle-producto .pago-detalle-boton a i {
+.pago-detalle-producto .pago-detalle-boton button i {
   margin-right: 15px;
 }
 
-.pago-detalle-producto .pago-detalle-boton a:hover {
+.pago-detalle-producto .pago-detalle-boton button:hover {
   text-decoration: none;
 }
 

@@ -183,6 +183,34 @@ const estadoProducto = async (id) => {
     }
 }
 
+const productosIndex = async (estado) => {
+    const productos = Producto.findAll({
+        where: {
+            estado: true,
+            destacado: estado
+        },
+        include: [
+            {
+                model: Categoria,
+                as: 'categoria',
+            }
+        ]
+    });
+    return productos;
+}
+
+const productoIndex = async (id) => {
+    const producto = await Producto.findByPk(id, {
+        include: [
+            {
+                model: Categoria,
+                as: 'categoria',
+            }
+        ]
+    });
+    return producto;
+}
+
 module.exports = {
     Producto, 
     addProducto, 
@@ -191,4 +219,6 @@ module.exports = {
     editProducto, 
     deleteProducto, 
     estadoProducto,
+    productosIndex,
+    productoIndex
 };

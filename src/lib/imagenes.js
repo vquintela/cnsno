@@ -21,7 +21,6 @@ imagenes.crearCarpeta = async (imgs, folder) => {
         }
     });
     if (resp) {
-        // if (folder) imagenes.borrarCarpeta(folder);
         return carpeta;
     } else {
         return -1;
@@ -32,6 +31,33 @@ imagenes.borrarCarpeta = async (folder) => {
     console.log(folder)
     await fse.remove(path.resolve(`src/public/img/${folder}`));
     return 1;
+}
+
+imagenes.cargarImagenes = (productos) => {
+    const prodImg = productos.map((producto) => {
+        const imagenes = fse.readdirSync(path.join(`src/public/img/${producto.imagen}`));
+        const imgs = imagenes.map(img => `${producto.imagen}/${img}`);
+        const prod = producto.toJSON();
+        return {...prod, imgs}
+    });
+    console.log(prodImg)
+    return prodImg;
+}
+
+imagenes.cargarImagen = (productos) => {
+    const prodImg = productos.map((producto) => {
+        const imagenes = fse.readdirSync(path.join(`src/public/img/${producto.imagen}`));
+        const imgs = `${producto.imagen}/${imagenes[0]}`;
+        return {...producto, imgs}
+    });
+    return prodImg;
+}
+
+imagenes.cargarImagenesProducto = producto => {
+    const imagenes = fse.readdirSync(path.join(`src/public/img/${producto.imagen}`));
+    const imgs = imagenes.map(img => `${producto.imagen}/${img}`);
+    const prodImg =  {...producto.toJSON(), imgs}
+    return prodImg;
 }
 
 module.exports = imagenes;

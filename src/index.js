@@ -50,8 +50,8 @@ app.use((req, res, next) => {
 //Routes
 app.use(require('./routes/index'));
 app.use('/cliente', isLoggedIn, require('./routes/cliente'));
-app.use('/admin', isAdmin, require('./routes/admin'));
-// app.use('/admin', require('./routes/admin'));
+// app.use('/admin', isAdmin, require('./routes/admin'));
+app.use('/admin', require('./routes/admin'));
 
 //archivos publicos
 app.use(express.static(path.join(__dirname, 'public')));

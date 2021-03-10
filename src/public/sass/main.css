@@ -276,22 +276,22 @@ body {
           align-items: center;
 }
 
-.contenedor .fila .tarjeta .tarjeta-botones button {
+.contenedor .fila .tarjeta .tarjeta-botones a {
   cursor: pointer;
   border: none;
   background-color: transparent;
 }
 
-.contenedor .fila .tarjeta .tarjeta-botones button i {
+.contenedor .fila .tarjeta .tarjeta-botones a i {
   font-size: 1.5rem;
   margin-right: 5px;
 }
 
-.contenedor .fila .tarjeta .tarjeta-botones button:first-child {
+.contenedor .fila .tarjeta .tarjeta-botones a:first-child {
   color: #4475b2;
 }
 
-.contenedor .fila .tarjeta .tarjeta-botones button:last-child {
+.contenedor .fila .tarjeta .tarjeta-botones a:last-child {
   color: #e2257d;
 }
 

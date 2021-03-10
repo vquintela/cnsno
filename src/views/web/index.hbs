@@ -7,132 +7,29 @@
 </div>
 <div class="contenedor">
     <div class="fila">
+        {{#each productos}}
         <div class="tarjeta">
             <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
+                <img src="img/{{imgs}}" alt="">
+                <p>${{precio}}</p>
                 <div class="imagen-icon">
                     <i class="fas fa-music"></i>
                 </div>
             </div>
             <div class="tarjeta-cuerpo">
                 <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
+                    <h6>{{categoria.nombre}}</h6>
                 </div>
                 <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
+                    <p>{{nombre}}</p>
                 </div>
                 <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
+                    <a href="/producto/{{id}}"><i class="fas fa-plus-circle"></i>Ver</a>
+                    <a href=""><i class="fas fa-cart-plus"></i>Añadir</a>
                 </div>
             </div>
         </div>
-        <div class="tarjeta">
-            <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
-                <div class="imagen-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-            <div class="tarjeta-cuerpo">
-                <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
-                </div>
-                <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
-                </div>
-            </div>
-        </div>
-        <div class="tarjeta">
-            <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
-                <div class="imagen-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-            <div class="tarjeta-cuerpo">
-                <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
-                </div>
-                <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
-                </div>
-            </div>
-        </div>
-        <div class="tarjeta">
-            <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
-                <div class="imagen-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-            <div class="tarjeta-cuerpo">
-                <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
-                </div>
-                <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
-                </div>
-            </div>
-        </div>
-        <div class="tarjeta">
-            <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
-                <div class="imagen-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-            <div class="tarjeta-cuerpo">
-                <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
-                </div>
-                <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
-                </div>
-            </div>
-        </div>
-        <div class="tarjeta">
-            <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
-                <div class="imagen-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-            <div class="tarjeta-cuerpo">
-                <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
-                </div>
-                <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
-                </div>
-            </div>
-        </div>
+        {{/each}}
     </div>
 </div>
 <div class="titulo-varios">
@@ -145,131 +42,28 @@
 </div>
 <div class="contenedor">
     <div class="fila">
+        {{#each productosVarios}}
         <div class="tarjeta">
             <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
+                <img src="img/{{imgs}}" alt="">
+                <p>{{precio}}</p>
                 <div class="imagen-icon">
                     <i class="fas fa-music"></i>
                 </div>
             </div>
             <div class="tarjeta-cuerpo">
                 <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
+                    <h6>{{categoria.nombre}}</h6>
                 </div>
                 <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
+                    <p>{{nombre}}</p>
                 </div>
                 <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
+                    <a href="/producto/{{id}}"><i class="fas fa-plus-circle"></i>Ver</a>
+                    <a href=""><i class="fas fa-cart-plus"></i>Añadir</a>
                 </div>
             </div>
         </div>
-        <div class="tarjeta">
-            <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
-                <div class="imagen-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-            <div class="tarjeta-cuerpo">
-                <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
-                </div>
-                <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
-                </div>
-            </div>
-        </div>
-        <div class="tarjeta">
-            <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
-                <div class="imagen-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-            <div class="tarjeta-cuerpo">
-                <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
-                </div>
-                <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
-                </div>
-            </div>
-        </div>
-        <div class="tarjeta">
-            <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
-                <div class="imagen-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-            <div class="tarjeta-cuerpo">
-                <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
-                </div>
-                <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
-                </div>
-            </div>
-        </div>
-        <div class="tarjeta">
-            <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
-                <div class="imagen-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-            <div class="tarjeta-cuerpo">
-                <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
-                </div>
-                <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
-                </div>
-            </div>
-        </div>
-        <div class="tarjeta">
-            <div class="tarjeta-imagen">
-                <img src="img/remerablanca.jpg" alt="">
-                <p>$2000</p>
-                <div class="imagen-icon">
-                    <i class="fas fa-music"></i>
-                </div>
-            </div>
-            <div class="tarjeta-cuerpo">
-                <div class="tarjeta-titulo">
-                    <h6>Remera de Rock</h6>
-                </div>
-                <div class="tarjeta-texto">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="tarjeta-botones">
-                    <button type="submit"><i class="fas fa-plus-circle"></i>Ver</button>
-                    <button type="submit"><i class="fas fa-cart-plus"></i>Añadir</button>
-                </div>
-            </div>
-        </div>
+        {{/each}}
     </div>
 </div>

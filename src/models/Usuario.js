@@ -107,7 +107,9 @@ const getUsuarioEmail = async (email) => {
 }
 
 const getUserPK = async (id) => {
-    const user = await Usuario.findByPk(id);
+    const user = await Usuario.findByPk(id, {
+        attributes: ['id', 'nombre', 'apellido', 'email', 'rol']
+    });
     return user;
 }
 

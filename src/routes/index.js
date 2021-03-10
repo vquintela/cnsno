@@ -6,7 +6,7 @@ const auth = require('../controller/admin/authController');
 
 // RUTAS SITIO
 router.get('/', site.getIndex);
-router.get('/producto', site.getProducto);
+router.get('/producto/:id', site.getProducto);
 router.get('/productos', site.getProductos);
 
 // RUTAS CARRITO

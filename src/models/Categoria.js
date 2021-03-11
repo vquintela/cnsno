@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../lib/sequelize');
-// const { Producto } = require('./Producto');
 const mensaje = require('../lib/errorMessageValidation');
 
 const Categoria = sequelize.define('categoria', {

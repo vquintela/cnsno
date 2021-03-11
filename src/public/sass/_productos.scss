@@ -91,3 +91,18 @@
         }
     }
 }
+
+// BREADCUMP
+.breadcrumb {
+    padding: 8px 16px;
+    list-style: none;
+    background-color: #eee;
+    li {
+        display: inline;
+    }
+    li+li:before {
+        padding: 8px;
+        color: black;
+        content: "/\00a0";
+    }
+}

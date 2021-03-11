@@ -1,3 +1,16 @@
+<ul class="breadcrumb">
+    <li><a href="/productos">Todos</a></li>
+    {{#each categorias}}
+    {{#if (estado @root.catPadre this.id)}}
+    <li><a href="productos?catPadre={{this.id}}&catHijo=">{{this.nombre}}</a></li>
+    {{/if}}
+    {{/each}}
+    {{#each subCat}}
+    {{#if (estado @root.catHijo this.id)}}
+    <li>{{this.nombre}}</li>
+    {{/if}}
+    {{/each}}
+</ul>
 <div class="productos-filtro-contenedor">
     <div class="productos-filtro-contenido">
         <p>filtros</p>
@@ -11,35 +24,35 @@
                     <i class="fas fa-chevron-right"></i>
                 </div>
                 <div class="contenido-filtro">
-                    <div class="contenido-filtro-items">
+                    <div class="contenido-filtro-items catPadre">
+                        {{#each categorias}}
                         <hr>
-                        <p>Rock Nacional</p>
-                        <hr>
-                        <p>Rock Internacional</p>
-                        <hr>
-                        <p>Rock Vintage</p>
+                        <p id="{{this.id}}" class="padre">{{this.nombre}}</p>
+                        {{/each}}
                         <hr>
                     </div>
+                    <input type="hidden" id="catActual" value="{{catPadre}}">
                 </div>
             </div>
+            {{#if subCat}}
             <div>
                 <div class="producto-filtro-item">
-                    <p>orden</p>
+                    <p>Subcategoria</p>
                     <i class="fas fa-chevron-right"></i>
                 </div>
                 <div class="contenido-filtro">
-                    <div class="contenido-filtro-items">
+                    <div class="contenido-filtro-items subCat">
+                        {{#each subCat}}
                         <hr>
-                        <p>Destacado</p>
-                        <hr>
-                        <p>Mayor Precio</p>
-                        <hr>
-                        <p>Menor Precio</p>
+                        <p id="{{this.id}}" class="hijo">{{this.nombre}}</p>
+                        {{/each}}
                         <hr>
                     </div>
                 </div>
             </div>
+            {{/if}}
         </div>
     </div>
 </div>
-<script src="js/productos.js"></script>
+{{> mostrarProductos productos=productos}}
+<script src="/js/productos.js"></script>

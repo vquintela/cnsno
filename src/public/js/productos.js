@@ -26,3 +26,17 @@ subMenu.forEach(element => {
         }
     });
 });
+
+// FILTROS LISTADO PRODUCTOS
+document.querySelectorAll('.contenido-filtro-items p').forEach(element => {
+    element.addEventListener('click', e => {
+        let catPadre = '';
+        if (e.target.classList.contains('padre')) catPadre = e.target.id;
+        let catHijo = '';
+        if (e.target.classList.contains('hijo')) {
+            catHijo = e.target.id;
+            catPadre = document.getElementById('catActual').value;
+        } 
+        location.href = `/productos?catPadre=${catPadre}&catHijo=${catHijo}`
+    })
+});

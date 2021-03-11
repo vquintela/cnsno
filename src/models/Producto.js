@@ -211,6 +211,28 @@ const productoIndex = async (id) => {
     return producto;
 }
 
+const productosIndexTotal = async (id) => {
+    const consulta = id ? { [Op.or]: [{id: id}, { categoriaPadre: id }] } : '';
+    try {
+        const productos = await Producto.findAll({
+            include: [
+                {
+                    model: Categoria,
+                    as: 'categoria',
+                    required : true,
+                    where: {
+                        estado: true,
+                        ...consulta
+                    }
+                }
+            ],
+        });
+        return productos;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     Producto, 
     addProducto, 
@@ -220,5 +242,6 @@ module.exports = {
     deleteProducto, 
     estadoProducto,
     productosIndex,
-    productoIndex
+    productoIndex,
+    productosIndexTotal
 };

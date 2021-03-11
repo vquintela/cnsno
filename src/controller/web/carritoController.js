@@ -57,7 +57,6 @@ const verCarrito = (req, res) => {
   const carrito = new Carrito(req.session.carrito);
   let productos = carrito.generateArray();
   productos = imagenes.carritoImagenes(productos);
-  console.log(productos);
   res.render("web/carrito", {
     productos: carrito.generateArray(),
     precioTotal: carrito.totalPrice,

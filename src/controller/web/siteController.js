@@ -1,5 +1,6 @@
 const Producto = require("../../models/Producto");
 const imagenes = require("../../lib/imagenes");
+const Categoria = require("../../models/Categoria");
 
 const randomProduct = (productos) => {
     let list = [];
@@ -48,8 +49,26 @@ const getProducto = async (req, res) => {
     });
 }
 
-const getProductos = (req, res) => {
-    res.render('web/productos')
+const getProductos = async (req, res) => {
+    const catPadre = parseInt(req.query.catPadre);
+    const catHijo = parseInt(req.query.catHijo);
+    const categorias = await Categoria.getCategorias(true, 0);
+    let subCat = null;
+    if (catPadre) {
+        subCat = await Categoria.getCategorias(true, catPadre);
+        subCat = subCat.map(sub => sub.toJSON());
+    } 
+    const id = catHijo ? catHijo : catPadre;
+    let productos = await Producto.productosIndexTotal(id);
+    productos = productos.map(prod => prod.toJSON());
+    productos = imagenes.cargarImagen(productos);
+    res.render('web/productos', {
+        catPadre: catPadre,
+        catHijo: catHijo,
+        subCat: subCat,
+        categorias: categorias.map(cat => cat.toJSON()),
+        productos: productos
+    });
 }
 
 module.exports = {getIndex, getProducto, getProductos}

@@ -5,7 +5,9 @@
     </div>
     <div class="carrito-nav">
         <a class="" href="/cart">
-            <span class="fa-stack fa-2x has-badge" data-count="0" id="cart-navbar">
+            <span class="fa-stack fa-2x has-badge" 
+                data-count="{{#if session.carrito.totalQty}}{{session.carrito.totalQty}}{{else}}0{{/if}}" 
+                id="cart-navbar">
                 <i class="fa fa-shopping-cart fa-stack-1x"></i>
             </span>
         </a>
@@ -16,16 +18,10 @@
     <div class="nav-navbar" id="nav-navbar">
         <ul>
             <li>
-                <a href="#">inicio</a>
+                <a href="/">inicio</a>
             </li>
             <li>
-                <a href="#">productos</a>
-            </li>
-            <li>
-                <a href="#">destacados</a>
-            </li>
-            <li>
-                <a href="#">promociones</a>
+                <a href="/productos">productos</a>
             </li>
             {{#if user}}
             <li>
@@ -33,7 +29,7 @@
             </li>
             {{else}}
             <li>
-                <a href="#" id="ingreso">ingresar</a>
+                <a href="/signin" id="ingreso">ingresar</a>
             </li>
             <li>
                 <a href="#">registrarse</a>

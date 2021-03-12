@@ -24,5 +24,9 @@ router.get('/auth/google', auth.authGoogle);
 router.get('/auth/google/callback', auth.callbackGoogle);
 router.get('/auth/facebook', auth.authFacebook);
 router.get('/auth/facebook/callback', auth.callbackFacebook);
+router.get('/signup', auth.signup);
+router.post('/signup', auth.saveSignup);
+router.get('/verifica', auth.verificaEmail);
+router.post('/renew', auth.nuevoPass);
 
 module.exports = router;

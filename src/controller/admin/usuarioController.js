@@ -94,22 +94,32 @@ const saveNewPws = async (req, res) => {
         res.redirect('/admin/users/newpws')
         return
     }
-    const user = await Usuario.getUserPK(id);
-    const value = await helperPws.matchPassword(passwordActual, user.password)
+    const user = await Usuario.getUsuarioEmail(req.user.email);
+    const value = await helperPws.matchPassword(passwordActual, user.password);
     if(value) {
         try {
-            const newPass = await helperPws.encryptPassword(nuevaPass)
-            await Usuario.editPass(newPass, id);
+            await Usuario.editPass(nuevaPass, id);
             res.redirect('/logout')
             return
         } catch (error) {
             console.log(error)
         }
     } else {
-        req.flash('error', 'Password incorrecta')
-        res.redirect('/admin/users/newpws')
+        req.flash('error', 'Password incorrecta');
+        res.redirect('/admin/users/newpws');
         return
     }
+}
+
+const estadoUsuario = async (req, res) => {
+    const id = req.params.id;
+    const resp = await Usuario.estadoUsuario(id);
+    if (resp != 1) {
+        req.flash('error', 'No se pudo cambiar el estado');
+    } else {
+        req.flash('success', 'Estado cambiado');
+    }
+    res.status(200).json('ok')
 }
 
 module.exports = {
@@ -120,5 +130,6 @@ module.exports = {
     getUsuario,
     newPws,
     saveNewPws,
-    editUsuario
+    editUsuario,
+    estadoUsuario
 }

@@ -20,6 +20,7 @@
                             <th scope="col">Apellido</th>
                             <th scope="col">Email</th>
                             <th scope="col">Rol</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -31,6 +32,17 @@
                             <th>{{apellido}}</th>
                             <th>{{email}}</th>
                             <th>{{rol}}</th>
+                            <th>
+                                {{#if estado}}
+                                <button class="btn btn-sm btn-outline-danger estado" data-id="{{id}}">
+                                    Deshabilitar
+                                </button>
+                                {{else}}
+                                <button class="btn btn-sm btn-outline-primary estado" data-id="{{id}}">
+                                    Habilitar
+                                </button>
+                                {{/if}}
+                            </th>
                             <th>
                                 <a class="btn btn-sm btn-success" href="/admin/users/editar/{{id}}">
                                     <i class="fas fa-pen"></i>

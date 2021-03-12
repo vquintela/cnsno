@@ -15,7 +15,7 @@ passport.use('local.signin', new LocalStrategy({
     const user = await Usuario.getUsuarioEmail(email);
     if(user){
         const validPassword = await helpers.matchPassword(password, user.password);
-        if(validPassword) {
+        if(validPassword && user.estado) {
             done(null, user, req.flash('success', 'Bienvenido ' + user.nombre));
         } else {
             done(null, false, req.flash('error', 'Usuario o Password Incorrecta'));

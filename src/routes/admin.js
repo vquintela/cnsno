@@ -32,6 +32,7 @@ router.get('/users/editar/:id', usuarios.getUsuario);
 router.post('/users/editar/:id', usuarios.editUsuario);
 router.get('/users/newpws', usuarios.newPws);
 router.post('/users/newpws', usuarios.saveNewPws);
+router.put('/users/estado/:id', usuarios.estadoUsuario);
 
 // VENTAS
 router.get('/ventas', ventas.getVentas);

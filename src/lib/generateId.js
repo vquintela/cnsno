@@ -4,8 +4,9 @@ const generateId = {}
 
 generateId.name = () => {
     return generate.generate({
-        length: 15,
-        numbers: true
+        length: 10,
+        numbers: true,
+        strict: true
     })
 }
 

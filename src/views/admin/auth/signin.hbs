@@ -9,7 +9,7 @@
                     {{!-- <img src="/img/contacto.png" alt="Logo" class="card-img-top mx-auto m-2 rounded-circle w-50"> --}}
                     <form action="/signin" method="POST">
                         <div class="form-group">
-                            <input type="email" name="email" placeholder="Email" class="form-control">
+                            <input type="email" id="email" name="email" placeholder="Email" class="form-control">
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" placeholder="Password" class="form-control">
@@ -18,6 +18,9 @@
                             <button class="btn btn-sm btn-success btn-block">
                                 Ingresar
                             </button>
+                        </div>
+                        <div class="form-group">
+                            <a href="#" id="renewPass">¿Olvido su contraseña?</a>
                         </div>
                         <a class="btn btn-sm btn-success btn-block" href="/auth/google">
                             Google
@@ -31,3 +34,4 @@
         </div>
     </div>
 </div>
+<script src="/js/signin.js"></script>

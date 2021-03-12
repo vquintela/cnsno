@@ -50,6 +50,10 @@ const Usuario = sequelize.define('usuario', {
     },
     email: {
         type: Sequelize.TEXT,
+        allowNull: false,
+        unique: {
+            msg: 'Email en uso'
+        },
         validate: {
             notEmpty: {
                 msg: 'No se permiten campos vacios'
@@ -78,10 +82,18 @@ const Usuario = sequelize.define('usuario', {
             notEmpty: {
                 msg: 'No se permiten campos vacios'
             }
-        }
+        },
+        defaultValue: 'cliente'
     },
     oauthId: {
         type: Sequelize.STRING
+    },
+    numAut: {
+        type: Sequelize.STRING
+    },
+    estado: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 }, {
     timestamps: false
@@ -92,7 +104,14 @@ Usuario.beforeCreate(async (usuario, options) => {
         const hashedPassword = await hashPassword(usuario.password);
         usuario.password = hashedPassword;
     }
-})
+});
+
+Usuario.beforeUpdate(async (usuario, options) => {
+    if(usuario.password) {
+        const hashedPassword = await hashPassword(usuario.password);
+        usuario.password = hashedPassword;
+    }
+});
 
 // Usuario.sync({
 //     force: true
@@ -138,7 +157,11 @@ const deleteUsuario = async (id) => {
 
 const editPass = async (newPass, id) => {
     try {
-        await Usuario.update({ password: newPass }, {where: {id: id}});
+        await Usuario.update(
+            { password: newPass }, 
+            {where: { id: id },
+            individualHooks: true
+        });
         return 1
     } catch (error) {
         console.log(error)
@@ -175,10 +198,20 @@ const findOrCreate = async (user) => {
             nombre: user.nombre,
             apellido: user.apellido,
             email: user.email,
-            // password: 'Cnsno2021'
+            estado: true
         }
     });
     return usuario;
+}
+
+const estadoUsuario = async (id) => {
+    try {
+        let usuario = await Usuario.findByPk(id);
+        await usuario.update({ estado: !usuario.estado });
+        return 1;
+    } catch (error) {
+        return mensaje.crearMensaje(error);
+    }
 }
 
 module.exports = {
@@ -191,5 +224,6 @@ module.exports = {
     editUsuario,
     getRoles,
     getUSerOauth,
-    findOrCreate
+    findOrCreate,
+    estadoUsuario
 }

@@ -66,9 +66,6 @@ const Usuario = sequelize.define('usuario', {
     password: {
         type: Sequelize.TEXT,
         validate: {
-            // notEmpty: {
-            //     msg: 'No se permiten campos vacios'
-            // },
             is: {
                 args: /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/g,
                 msg: 'La password no cumple los requisitos de seguridad'
@@ -132,8 +129,11 @@ const getUserPK = async (id) => {
     return user;
 }
 
-const getUsuarios = async () => {
-    const users = await Usuario.findAll();
+const getUsuarios = async (rol, estado) => {
+    let consulta = {};
+    if(rol) consulta = { rol: rol };
+    if(estado) consulta = { ...consulta, estado: JSON.parse(estado) };
+    const users = await Usuario.findAll({where: { ...consulta }});
     return users;
 }
 

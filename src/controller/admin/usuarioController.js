@@ -2,9 +2,14 @@ const Usuario = require('../../models/Usuario');
 const helperPws = require('../../lib/password');
 
 const getUsuarios = async (req, res) => {
-    const usuarios = await Usuario.getUsuarios();
+    const { estado, rol } = req.query;
+    const usuarios = await Usuario.getUsuarios(rol, estado);
+    const roles = await Usuario.getRoles();
     res.render('admin/usuarios',{
         usuarios: usuarios.map(usuario => usuario.toJSON()),
+        roles: roles,
+        actualEstado: estado,
+        actualRol: rol
     })
 }
 

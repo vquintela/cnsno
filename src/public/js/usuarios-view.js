@@ -21,3 +21,14 @@ const estado = async (e) => {
         if (resp.ok) location.href = `${window.location.pathname}`;
     }
 }
+
+// FILTROS
+document.querySelector('.estado-buscar').addEventListener('change', () => filtrar());
+document.querySelector('.rol-buscar').addEventListener('change', () => filtrar());
+
+const filtrar = () => {
+    const estado = document.querySelector('.estado-buscar').value;
+    const rol = document.querySelector('.rol-buscar').value;
+    location.href = `/admin/users?estado=${estado}&rol=${rol}`;
+}
+

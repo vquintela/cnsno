@@ -1,7 +1,15 @@
 document.querySelectorAll('.eliminar').forEach(btn => btn.addEventListener('click', e => eliminar(e)));
 document.querySelectorAll('.estado').forEach(btn => btn.addEventListener('click', e => estado(e)));
-document.querySelector('.categoria-buscar').addEventListener('change', () => filtrar());
-document.querySelector('.subCat-buscar').addEventListener('change', () => filtrar());
+document.querySelector('.categoria-buscar').addEventListener('change', () => {
+    const categoria = document.querySelector('.categoria-buscar').value;
+    const subCat = '';
+    filtrar(categoria, subCat);
+});
+document.querySelector('.subCat-buscar').addEventListener('change', () => {
+    const categoria = document.querySelector('.categoria-buscar').value;
+    const subCat = document.querySelector('.subCat-buscar').value;
+    filtrar(categoria, subCat);
+});
 
 const eliminar = async (e) => {
     const id = e.target.getAttribute('data-id');
@@ -26,9 +34,6 @@ const estado = async (e) => {
     }
 }
 
-const filtrar = () => {
-    const categoria = document.querySelector('.categoria-buscar').value;
-    let subCat = document.querySelector('.subCat-buscar').value;
-    if (!categoria) subCat = '';
+const filtrar = (categoria, subCat) => {
     location.href = `/admin/productos/1?categoria=${categoria}&subCat=${subCat}`;
 }

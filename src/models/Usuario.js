@@ -173,6 +173,7 @@ const editUsuario = async (values, id) => {
         await Usuario.update({ ...values }, {where: {id: id}});
         return 1;
     } catch (error) {
+        console.log(error)
         return mensaje.crearMensajeObj(error);
     }
 }

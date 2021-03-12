@@ -55,13 +55,14 @@ const getUsuario = async (req, res) => {
 }
 
 const editUsuario = async (req, res) => {
-    const { id, nombre, apellido, email, password } = req.body;
+    const { nombre, apellido, email, rol } = req.body;
+    const id = req.params.id;
     const values = {
         nombre,
         apellido,
-        email 
+        email,
+        rol
     }
-    if (password) values.password = await helperPws.encryptPassword(password);
     const resp = await Usuario.editUsuario(values, id);
     if (resp === 1) {
         req.flash('success', 'Usuario editado de forma correcta');

@@ -4,7 +4,6 @@ const sequelize = require('../lib/sequelize');
 const mensaje = require('../lib/errorMessageValidation');
 const imagenes = require('../lib/imagenes');
 const { Categoria } = require('./Categoria');
-// const Itemventa = require('./Itemventa');
 
 const Producto = sequelize.define('producto', {
     id: {
@@ -100,8 +99,6 @@ const Producto = sequelize.define('producto', {
     timestamps: false
 });
 
-// Producto.hasMany(Itemventa, { foreignKey: 'id_producto', sourceKey: 'id' })
-// Itemventa.belongsTo(Producto, { foreignKey: 'id_producto', sourceKey: 'id' })
 Categoria.hasMany(Producto, { foreignKey: 'id_categoria', sourceKey: 'id', as: 'producto' })
 Producto.hasOne(Categoria, { foreignKey: 'id', sourceKey: 'id_categoria', as: 'categoria' })
 

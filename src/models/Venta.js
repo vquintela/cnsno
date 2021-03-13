@@ -66,11 +66,8 @@ const Venta = sequelize.define('venta', {
     },
     fecha: {
         type: Sequelize.DATE,
-        validate: {
-            notEmpty: {
-                msg: 'No se permiten campos vacios'
-            }
-        },
+        allowNull: false,
+        defaultValue: new Date()
     },
     total_venta: {
         type: Sequelize.DOUBLE,
@@ -122,8 +119,34 @@ const getVentas = async () => {
     return ventas;
 }
 
+const crearVenta = async (venta) => {
+    const vent = await Venta.build(venta);
+    return vent;
+}
+
+const guardarVenta = async (venta) => {
+    try {
+        const vent = await Venta.create(venta);
+        return vent;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const guardarDetalle = async (detalle) => {
+    try {
+        await DetalleVenta.create(detalle);
+        return 1
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     Venta,
     DetalleVenta,
-    getVentas
+    getVentas,
+    crearVenta,
+    guardarVenta,
+    guardarDetalle
 }

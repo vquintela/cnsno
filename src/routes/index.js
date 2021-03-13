@@ -33,5 +33,8 @@ router.post('/renew', auth.nuevoPass);
 // VENTAS
 router.post('/pagar', venta.pagar);
 router.get('/efectivo', venta.efectivo);
+router.get('/success', venta.pagoSuccess);
+router.get('/failure', venta.pagoFailure);
+router.get('/pending', venta.pagoPending);
 
 module.exports = router;

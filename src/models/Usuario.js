@@ -207,8 +207,10 @@ const findOrCreate = async (user) => {
 
 const estadoUsuario = async (id) => {
     try {
-        let usuario = await Usuario.findByPk(id);
-        await usuario.update({ estado: !usuario.estado });
+        let usuario = await Usuario.findByPk(id, {
+            attributes: ['id', 'estado']
+        });
+        await usuario.update({ estado: !usuario.estado },{individualHooks: false});
         return 1;
     } catch (error) {
         return mensaje.crearMensaje(error);

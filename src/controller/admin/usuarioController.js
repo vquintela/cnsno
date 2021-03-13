@@ -125,7 +125,7 @@ const estadoUsuario = async (req, res) => {
     } else {
         req.flash('success', 'Estado cambiado');
     }
-    res.status(200).json('ok')
+    res.status(200).json('ok');
 }
 
 module.exports = {

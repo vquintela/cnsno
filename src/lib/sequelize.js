@@ -1,12 +1,13 @@
 const { Sequelize } = require('sequelize');
+const { databaseKeys } = require('./keys');
 
-const database = 'cnsno_web';
-const username = 'root';
-const password = '';
+const database = databaseKeys.database;
+const username = databaseKeys.username;
+const password = databaseKeys.password;
 
 const sequelize = new Sequelize(database, username, password, {
-    host: 'localhost',
-    dialect: 'mysql',
+    host: databaseKeys.host,
+    dialect: databaseKeys.dialect,
     pool: {
         max: 5,
         min: 0,

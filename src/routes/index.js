@@ -3,6 +3,7 @@ const router = express.Router();
 const site = require('../controller/web/siteController');
 const carrito = require('../controller/web/carritoController');
 const auth = require('../controller/admin/authController');
+const venta = require('../controller/admin/ventaController');
 
 // RUTAS SITIO
 router.get('/', site.getIndex);
@@ -28,5 +29,9 @@ router.get('/signup', auth.signup);
 router.post('/signup', auth.saveSignup);
 router.get('/verifica', auth.verificaEmail);
 router.post('/renew', auth.nuevoPass);
+
+// VENTAS
+router.post('/pagar', venta.pagar);
+router.get('/efectivo', venta.efectivo);
 
 module.exports = router;

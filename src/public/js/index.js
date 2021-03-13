@@ -35,3 +35,17 @@ const modal = (titulo, texto) => {
         });
     });
 }
+
+// CHECKBOX METODO DE PAGO EN CARRITO
+const check1 = document.getElementById('check1');
+const check2 = document.getElementById('check2');
+if (check1) check1.addEventListener('change', e => {
+    if (e.target.checked) {
+        check2.checked = null;
+    }
+});
+if (check2) check2.addEventListener('change', e => {
+    if (e.target.checked) {
+        check1.checked = null;
+    }
+});

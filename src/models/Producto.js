@@ -193,6 +193,10 @@ const productosIndex = async (estado) => {
             {
                 model: Categoria,
                 as: 'categoria',
+                required : true,
+                where: {
+                    estado: true
+                }
             }
         ]
     });
@@ -205,6 +209,10 @@ const productoIndex = async (id) => {
             {
                 model: Categoria,
                 as: 'categoria',
+                required : true,
+                where: {
+                    estado: true
+                }
             }
         ]
     });

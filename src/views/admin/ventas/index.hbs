@@ -4,10 +4,13 @@
         <div class="d-flex align-items-center mt-3">
             <div>
                 <h3 class="pl-5">VENTAS</h3>
+                {{#if usuario}}
+                <a href="/admin/ventas/{{actual}}?estado={{actualEstado}}" class="ml-5 btn-link">Todos los usuarios</a>
+                {{/if}}
             </div>
             <div class="d-flex ml-auto align-items-center col-md-4">
                 <select id="estado-venta" class="form-control mr-4">
-                    <option value="">todos</option>
+                    <option value="">Todos</option>
                     {{#each estados }}
                     <option value="{{this}}" {{#if (estado @root.actualEstado this) }}selected{{/if}}>
                         {{#status this}}{{/status}}
@@ -32,13 +35,13 @@
                     <tbody id="insertar-filas">
                         {{#each ventas}}
                         <tr>
-                            <th>{{this.id_usuario.nombre}} {{this.id_usuario.apellido}}</th>
+                            <th data-id="{{this.usuario.id}}" class="btn-link btn-usuario">{{this.usuario.nombre}} {{this.usuario.apellido}}</th>
                             <th>{{#date this.fecha}}{{/date}}</th>
                             <th>$ {{this.total_venta}}</th>
                             {{#status this.status}}{{/status}}
                             <th>{{this.forma_pago}}</th>
                             <th>
-                                <button class="btn btn-sm btn-primary detalle-venta" data-id="{{this._id}}">
+                                <button class="btn btn-sm btn-primary detalle-venta" data-id="{{this.id}}">
                                     <i class="fas fa-trash-alt"></i>
                                     Ver Detalle
                                 </button>
@@ -54,12 +57,12 @@
                     </tbody>
                 </table>
                 {{!-- PAGINACION PRODUCTOS --}}
-                {{!-- <nav class="ml-2" aria-label="Page navigation example">
+                <nav class="ml-2" aria-label="Page navigation example">
                     <ul class="pagination">
-                        {{#pagProd paginacion actual actualEstado }}
+                        {{#pagProd paginacion actual actualEstado usuario}}
                         {{/pagProd}}
                     </ul>
-                </nav> --}}
+                </nav>
             </div>
         </div>
     </div>

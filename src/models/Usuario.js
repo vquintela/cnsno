@@ -218,6 +218,7 @@ const estadoUsuario = async (id) => {
 }
 
 module.exports = {
+    Usuario,
     getUsuarioEmail,
     getUserPK,
     getUsuarios,

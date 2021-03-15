@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../lib/sequelize');
 const { Producto } = require('./Producto');
+const { Usuario } = require('./Usuario');
 
 const DetalleVenta = sequelize.define('detalleVenta', {
     id: {
@@ -11,19 +12,9 @@ const DetalleVenta = sequelize.define('detalleVenta', {
     },
     id_venta: {
         type: Sequelize.INTEGER,
-        validate: {
-            notEmpty: {
-                msg: 'No se permiten campos vacios'
-            }
-        }
     },
     id_producto: {
         type: Sequelize.INTEGER,
-        validate: {
-            notEmpty: {
-                msg: 'No se permiten campos vacios'
-            }
-        }
     },
     cantidad: {
         type: Sequelize.INTEGER,
@@ -96,10 +87,15 @@ const Venta = sequelize.define('venta', {
     }
 });
 
-Producto.hasMany(DetalleVenta, { foreignKey: 'id_producto', sourceKey: 'id', as: 'producto' });
-DetalleVenta.hasOne(Producto, {foreignKey: 'id', sourceKey: 'id_producto', as: 'detalleVenta'});
-Venta.hasMany(DetalleVenta, { foreignKey: 'id_venta', sourceKey: 'id', as: 'venta' });
-// DetalleVenta.hasOne(Venta, {foreignKey: 'id', sourceKey: 'id_venta', as: 'detalleVenta'});
+// Producto.hasMany(DetalleVenta, { foreignKey: 'id_producto', sourceKey: 'id', as: 'producto' });
+// DetalleVenta.hasOne(Producto, { foreignKey: 'id_producto', sourceKey: 'id', as: 'detalleVenta' });
+// Venta.hasOne(DetalleVenta, { foreignKey: 'id_venta', sourceKey: 'id', as: 'venta' });
+// DetalleVenta.hasMany(Venta, { foreignKey: 'id_venta', sourceKey: 'id', as: 'detVenta' })
+Producto.hasMany(DetalleVenta, { foreignKey: 'id_producto' });
+DetalleVenta.hasOne(Producto,{ foreignKey: 'id', sourceKey: 'id_producto' });
+Venta.hasMany(DetalleVenta, { foreignKey: 'id_venta' });
+Usuario.hasMany(Venta, { foreignKey: 'id_usuario', sourceKey: 'id', as: 'usuario' });
+Venta.hasOne(Usuario, { sourceKey: 'id_usuario', foreignKey: 'id' });
 
 // Venta.sync({
 //     force: true
@@ -114,9 +110,52 @@ Venta.hasMany(DetalleVenta, { foreignKey: 'id_venta', sourceKey: 'id', as: 'vent
 //     console.log('tabla creada')
 // });
 
-const getVentas = async () => {
-    const ventas = await Venta.findAll();
+const getVentas = async (estado, usuario, porPagina, porPaginaActual) => {
+    let consulta;
+    if (estado !== '') consulta = { status: estado };
+    if (usuario !== '') consulta = { ...consulta, id_usuario: usuario }
+    const ventas = await Venta.findAndCountAll({
+        where: {
+            ...consulta
+        },
+        include: [
+            // {
+            //     model: DetalleVenta,
+            //     required : true,
+            // },
+            {
+                model: Usuario,
+                as: 'usuario',
+                required: true,
+                attributes: ['id', 'nombre', 'apellido', 'email']
+            }
+        ],
+        limit: porPagina,
+        offset: porPaginaActual
+    });
+    console.log(ventas.rows)
     return ventas;
+}
+
+const getDetalle = async (id) => {
+    const detalle = await DetalleVenta.findAll({
+        where: {
+            id_venta: id,
+        },
+        include: [
+            {
+                model: Producto,
+                require: true,
+                attributes: ['id', 'nombre']
+            }
+        ]
+    });
+    return detalle;
+}
+
+const getEstados = async () => {
+    const estados = Venta.rawAttributes.status.values;
+    return estados;
 }
 
 const crearVenta = async (venta) => {
@@ -148,5 +187,7 @@ module.exports = {
     getVentas,
     crearVenta,
     guardarVenta,
-    guardarDetalle
+    guardarDetalle,
+    getDetalle,
+    getEstados
 }

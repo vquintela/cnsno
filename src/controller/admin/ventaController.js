@@ -5,10 +5,28 @@ const { generarPago } = require('../../lib/mercadopago');
 const imagenes = require('../../lib/imagenes');
 
 const getVentas = async (req, res) => {
-    const ventas = await Venta.getVentas();
+    const porPagina = 6;
+    const pagina = req.params.pagina || 1;
+    const porPaginaActual = ((porPagina * pagina) - porPagina);
+    const estado = req.query.estado || '';
+    const usuario = req.query.usuario || '';
+    let ventas = await Venta.getVentas(estado, usuario, porPagina, porPaginaActual);
+    ventas.rows = ventas.rows.map(vent => vent.toJSON());
+    const estados = await Venta.getEstados();
     res.render('admin/ventas', {
-
+        ventas: ventas.rows,
+        estados: estados,
+        actualEstado: req.query.estado || '',
+        paginacion: Math.ceil(ventas.count / porPagina),
+        actual: pagina,
+        usuario: usuario
     })
+}
+
+const getDetalle = async (req, res) => {
+    const id = req.params.id;
+    const resp = await Venta.getDetalle(id);
+    res.status(200).json(resp);
 }
 
 const pagar = async (req, res) => {
@@ -131,4 +149,5 @@ module.exports = {
     pagoSuccess,
     pagoFailure,
     pagoPending,
+    getDetalle
 }

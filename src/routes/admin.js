@@ -35,6 +35,7 @@ router.post('/users/newpws', usuarios.saveNewPws);
 router.put('/users/estado/:id', usuarios.estadoUsuario);
 
 // VENTAS
-router.get('/ventas', ventas.getVentas);
+router.get('/ventas/:pagina', ventas.getVentas);
+router.get('/ventas/detalle/:id', ventas.getDetalle);
 
 module.exports = router;

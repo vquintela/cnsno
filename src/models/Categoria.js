@@ -109,6 +109,13 @@ const estadoCategoria = async (id) => {
     }
 }
 
+const cantCat = async (req, res) => {
+    const cat = await Categoria.count({
+        where: { estado: true }
+    });
+    return cat
+}
+
 module.exports = { 
     Categoria,
     addCategorias, 
@@ -116,5 +123,6 @@ module.exports = {
     deleteCategorias, 
     getCategoria,
     editCategoria,
-    estadoCategoria
+    estadoCategoria,
+    cantCat
 };

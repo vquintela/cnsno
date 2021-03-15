@@ -43,6 +43,7 @@ const pagar = async (req, res) => {
         id_usuario: req.user.id,
         total_venta: carrito.totalPrice,
         forma_pago: factura.efectivo == 'on' ? 'transferencia' : 'mercadopago',
+        domicilio: factura.direccion
     });
     elementosCarrito.forEach(elemento => {
         const item = {

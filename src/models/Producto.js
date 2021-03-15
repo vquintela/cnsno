@@ -238,6 +238,13 @@ const productosIndexTotal = async (id) => {
     }
 }
 
+const contProductos = async (req, res) => {
+    cantProd = await Producto.count({
+        where: { estado: true }
+    });
+    return cantProd
+}
+
 module.exports = {
     Producto, 
     addProducto, 
@@ -248,5 +255,6 @@ module.exports = {
     estadoProducto,
     productosIndex,
     productoIndex,
-    productosIndexTotal
+    productosIndexTotal,
+    contProductos
 };

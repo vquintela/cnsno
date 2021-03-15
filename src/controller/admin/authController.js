@@ -30,7 +30,7 @@ const authGoogle = (req, res, next) => {
 
 const callbackGoogle = async (req, res, next) => {
     passport.authenticate( 'google', {
-        successRedirect: '/cliente',
+        successRedirect: '/admin/profile',
         failureRedirect: '/auth/google/failure',
     })(req, res, next);
 }
@@ -44,7 +44,7 @@ const authFacebook = async (req, res, next) => {
 
 const callbackFacebook = async (req, res, next) => {
     passport.authenticate('facebook', { 
-        successRedirect: '/cliente',
+        successRedirect: '/admin/profile',
         failureRedirect: '/login' 
     })(req, res, next);
 }

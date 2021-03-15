@@ -27,6 +27,7 @@
                             <th scope="col">Usuario</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Total</th>
+                            <th scope="col">Dirección</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Forma Pago</th>
                             <th scope="col">Detalle</th>
@@ -38,6 +39,7 @@
                             <th data-id="{{this.usuario.id}}" class="btn-link btn-usuario">{{this.usuario.nombre}} {{this.usuario.apellido}}</th>
                             <th>{{#date this.fecha}}{{/date}}</th>
                             <th>$ {{this.total_venta}}</th>
+                            <th>{{this.domicilio}}</th>
                             {{#status this.status}}{{/status}}
                             <th>{{this.forma_pago}}</th>
                             <th>

@@ -217,6 +217,13 @@ const estadoUsuario = async (id) => {
     }
 }
 
+const contUsuarios = async (req, res) => {
+    const contUser = await Usuario.count({
+        where: { estado: true }
+    });
+    return contUser;
+}
+
 module.exports = {
     Usuario,
     getUsuarioEmail,
@@ -229,5 +236,6 @@ module.exports = {
     getRoles,
     getUSerOauth,
     findOrCreate,
-    estadoUsuario
+    estadoUsuario,
+    contUsuarios
 }

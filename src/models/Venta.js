@@ -84,6 +84,14 @@ const Venta = sequelize.define('venta', {
     },
     merchant_order_id: {
         type: Sequelize.STRING,
+    },
+    domicilio: {
+        type: Sequelize.STRING,
+        validate: {
+            notEmpty: {
+                msg: 'No se permiten campos vacios'
+            }
+        }
     }
 });
 
@@ -131,9 +139,9 @@ const getVentas = async (estado, usuario, porPagina, porPaginaActual) => {
             }
         ],
         limit: porPagina,
-        offset: porPaginaActual
+        offset: porPaginaActual,
+        order: [['fecha', 'DESC']]
     });
-    console.log(ventas.rows)
     return ventas;
 }
 
@@ -181,6 +189,11 @@ const guardarDetalle = async (detalle) => {
     }
 }
 
+const contVentas = async (req, res) => {
+    const contVentas = await Venta.count();
+    return contVentas;
+}
+
 module.exports = {
     Venta,
     DetalleVenta,
@@ -189,5 +202,6 @@ module.exports = {
     guardarVenta,
     guardarDetalle,
     getDetalle,
-    getEstados
+    getEstados,
+    contVentas
 }

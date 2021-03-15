@@ -4,6 +4,7 @@ const productos = require('../controller/admin/productoController');
 const categorias = require('../controller/admin/categoriaController');
 const usuarios = require('../controller/admin/usuarioController');
 const ventas = require('../controller/admin/ventaController');
+const dash = require('../controller/admin/perfilController');
 
 // PRODUCTOS
 router.get('/productos/crear', productos.crearProducto);
@@ -37,5 +38,8 @@ router.put('/users/estado/:id', usuarios.estadoUsuario);
 // VENTAS
 router.get('/ventas/:pagina', ventas.getVentas);
 router.get('/ventas/detalle/:id', ventas.getDetalle);
+
+// PERFIL
+router.get('/profile', dash.dash);
 
 module.exports = router;

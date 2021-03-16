@@ -49,3 +49,18 @@ const crearSelect = categoria => {
     option.textContent = categoria.nombre;
     return option;
 }
+
+ClassicEditor
+.create( document.querySelector( '#editor' ), {
+    toolbar: [ 'heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList' ],
+    heading: {
+        options: [
+            { model: 'paragraph', title: 'Titulo', class: 'ck-heading_paragraph' },
+            { model: 'heading1', view: 'h1', title: 'Texto mediano', class: 'ck-heading_heading1' },
+            { model: 'heading2', view: 'h2', title: 'Texto pequeño', class: 'ck-heading_heading2' }
+        ]
+    }
+})
+.catch( error => {
+    console.error( error );
+} );

@@ -4,6 +4,7 @@ const site = require('../controller/web/siteController');
 const carrito = require('../controller/web/carritoController');
 const auth = require('../controller/admin/authController');
 const venta = require('../controller/admin/ventaController');
+const { isAdmin, isLoggedIn, isNotLoggedIn } = require('../lib/auth');
 
 // RUTAS SITIO
 router.get('/', site.getIndex);
@@ -18,23 +19,23 @@ router.get('/cart/add/:id', carrito.addItem);
 router.get('/cart/remove/:id', carrito.removeItem);
 
 // AUTH
-router.get('/signin', auth.signin);
-router.post('/signin', auth.login);
-router.get('/logout', auth.logout);
-router.get('/auth/google', auth.authGoogle);
-router.get('/auth/google/callback', auth.callbackGoogle);
-router.get('/auth/facebook', auth.authFacebook);
-router.get('/auth/facebook/callback', auth.callbackFacebook);
-router.get('/signup', auth.signup);
-router.post('/signup', auth.saveSignup);
+router.get('/signin', isNotLoggedIn, auth.signin);
+router.post('/signin', isNotLoggedIn, auth.login);
+router.get('/logout', isLoggedIn, auth.logout);
+router.get('/auth/google', isNotLoggedIn, auth.authGoogle);
+router.get('/auth/google/callback', isNotLoggedIn, auth.callbackGoogle);
+router.get('/auth/facebook', isNotLoggedIn, auth.authFacebook);
+router.get('/auth/facebook/callback', isNotLoggedIn, auth.callbackFacebook);
+router.get('/signup', isNotLoggedIn, auth.signup);
+router.post('/signup', isNotLoggedIn, auth.saveSignup);
 router.get('/verifica', auth.verificaEmail);
-router.post('/renew', auth.nuevoPass);
+router.post('/renew', isNotLoggedIn, auth.nuevoPass);
 
 // VENTAS
-router.post('/pagar', venta.pagar);
-router.get('/efectivo', venta.efectivo);
-router.get('/success', venta.pagoSuccess);
-router.get('/failure', venta.pagoFailure);
-router.get('/pending', venta.pagoPending);
+router.post('/pagar', isLoggedIn, venta.pagar);
+router.get('/efectivo', isLoggedIn, venta.efectivo);
+router.get('/success', isLoggedIn, venta.pagoSuccess);
+router.get('/failure', isLoggedIn, venta.pagoFailure);
+router.get('/pending', isLoggedIn, venta.pagoPending);
 
 module.exports = router;

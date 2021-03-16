@@ -77,7 +77,7 @@ const Venta = sequelize.define('venta', {
     },
     status: {
         type: Sequelize.ENUM,
-        values: ['approved', 'in_process', 'rejected', 'efectivo'],
+        values: ['approved', 'in_process', 'rejected', 'efectivo', 'pagado'],
     },
     payment_id: {
         type: Sequelize.STRING,
@@ -92,6 +92,10 @@ const Venta = sequelize.define('venta', {
                 msg: 'No se permiten campos vacios'
             }
         }
+    },
+    estadoPedido: {
+        type: Sequelize.ENUM,
+        values: ['nuevo', 'proceso', 'entrega', 'finalizado']
     }
 });
 

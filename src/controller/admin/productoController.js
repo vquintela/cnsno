@@ -47,7 +47,7 @@ const addProductos = async (req, res) => {
             const prod = await Producto.addProducto(values);
             if (prod === 1) {
                 req.flash('success', 'Producto Creado')
-                res.redirect('/admin/productos');
+                res.redirect('/admin/productos/1');
                 return
             } else {
                 error = prod;

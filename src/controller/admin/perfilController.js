@@ -17,8 +17,17 @@ const dash = async (req, res) => {
             cantProd: cantProd,
             cantVentas: cantVentas
         });
-    } else {
-        res.render('cliente');
+    } 
+    if (req.user.rol === 'cliente') {
+        const estado = req.query.estado || '';
+        const usuario = req.user.id;
+        let ventas = await Venta.getVentasUser(estado, usuario);
+        ventas = ventas.map(vent => vent.toJSON());
+        const estados = await Venta.getEstados();
+        res.render('cliente', {
+            estados: estados,
+            ventas: ventas
+        });
     }
 }
 

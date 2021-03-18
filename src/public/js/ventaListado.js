@@ -26,15 +26,22 @@ const detalleModal = (res) => {
 
 const generarFilas = item => {
     const tr = document.createElement('tr');
+    const thImagen = document.createElement('th');
+    const img = document.createElement('img');
+    img.setAttribute('class', 'img-fluid');
+    img.style.width = '40px';
+    img.src = `/img/${item.producto.imagenURL}`;
+    thImagen.appendChild(img);
     const thNombre = document.createElement('th');
     thNombre.innerText = item.producto.nombre;
     const thCantidad = document.createElement('th');
     thCantidad.innerText = item.cantidad;
     const thPrecio = document.createElement('th');
     thPrecio.innerText = item.precio;
-    tr.appendChild(thNombre)
-    tr.appendChild(thCantidad)
-    tr.appendChild(thPrecio)
+    tr.appendChild(thImagen);
+    tr.appendChild(thNombre);
+    tr.appendChild(thCantidad);
+    tr.appendChild(thPrecio);
     return tr;
 }
 
@@ -64,3 +71,41 @@ document.querySelectorAll('.btn-usuario').forEach(element => {
         location.href = `/admin/ventas/1?estado=${estado}&usuario=${usuario}`;
     });
 });
+
+// CAMBIO ESTADO PAGOS
+document.querySelectorAll('.conf-pago').forEach(element => {
+    element.addEventListener('click', e => {
+        const id = e.target.getAttribute('data-id');
+        checkPago(id);
+    });
+});
+
+const checkPago = async (id) => {
+    const res = await modal('Confirmar pago', '¿Desea confirmar el pago?')
+    if (res) {
+        const resp = await fetch(`/admin/ventas/pagado/${id}`, { 
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (resp.ok) location.href = '/admin/ventas/1'
+    }
+}
+
+// ESTADO PEDIDO
+document.querySelectorAll('.btn-pedido').forEach(element => {
+    element.addEventListener('click', e => {
+        const id = e.target.parentElement.getAttribute('data-id');
+        estadoPedido(id);
+    });
+});
+
+const estadoPedido = async (id) => {
+    const res = await modal('Actualizar Estado', '¿Desea actualizar el estado?')
+    if (res) {
+        const resp = await fetch(`/admin/ventas/pedido/${id}`, { 
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (resp.ok) location.href = '/admin/ventas/1'
+    }
+}

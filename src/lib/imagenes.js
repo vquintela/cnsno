@@ -56,7 +56,7 @@ imagenes.cargarImagen = (productos) => {
 imagenes.cargarImagenesProducto = producto => {
     const imagenes = fse.readdirSync(path.join(`src/public/img/${producto.imagen}`));
     const imgs = imagenes.map(img => `${producto.imagen}/${img}`);
-    const prodImg =  {...producto.toJSON(), imgs}
+    const prodImg =  {...producto.toJSON(), imgs};
     return prodImg;
 }
 
@@ -64,6 +64,15 @@ imagenes.carritoImagenes = arrayProducto => {
     const productos = arrayProducto.map(producto => {
         const imagenes = fse.readdirSync(path.join(`src/public/img/${producto.item.imagen}`));
         producto.item.imagenURL = `${producto.item.imagen}/${imagenes[0]}`;
+        return producto;
+    })
+    return productos;
+}
+
+imagenes.ventaCliente = arrayProducto => {
+    const productos = arrayProducto.map(producto => {
+        const imagenes = fse.readdirSync(path.join(`src/public/img/${producto.producto.imagen}`));
+        producto.producto.imagenURL = `${producto.producto.imagen}/${imagenes[0]}`;
         return producto;
     })
     return productos;

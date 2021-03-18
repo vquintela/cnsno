@@ -25,7 +25,9 @@ const getVentas = async (req, res) => {
 
 const getDetalle = async (req, res) => {
     const id = req.params.id;
-    const resp = await Venta.getDetalle(id);
+    let resp = await Venta.getDetalle(id);
+    resp = resp.map(re => re.toJSON());
+    resp = imagenes.ventaCliente(resp);
     res.status(200).json(resp);
 }
 
@@ -143,6 +145,28 @@ const pagoPending = async (req, res) => {
     });
 }
 
+const checkPago = async (req, res) => {
+    const id = req.params.id;
+    const resp = await Venta.checkPago(id);
+    if (resp != 1) {
+        req.flash('error', 'No se pudo cambiar el estado');
+    } else {
+        req.flash('success', 'Estado cambiado');
+    }
+    res.status(200).json('ok');
+}
+
+const estadoPedido = async (req, res) => {
+    const id = req.params.id;
+    const resp = await Venta.estadoPedido(id);
+    if (resp != 1) {
+        req.flash('error', 'No se pudo cambiar el estado');
+    } else {
+        req.flash('success', 'Estado cambiado');
+    }
+    res.status(200).json('ok');
+}
+
 module.exports = {
     getVentas,
     pagar,
@@ -150,5 +174,7 @@ module.exports = {
     pagoSuccess,
     pagoFailure,
     pagoPending,
-    getDetalle
+    getDetalle,
+    checkPago,
+    estadoPedido
 }

@@ -23,6 +23,21 @@ helpers.status = (status) => {
     }
 }
 
+helpers.casePedido = (pedido) => {
+    switch (pedido) {
+        case 'nuevo':
+            return '<button type="button" class="btn-pedido btn btn-sm btn-success">Nuevo</button>';
+        case 'proceso':
+            return '<button type="button" class="btn-pedido btn btn-sm btn-warning">En Proceso</button>';
+        case 'entrega':
+            return '<button type="button" class="btn-pedido btn btn-sm btn-secondary">Entrega</button>';
+        case 'finalizado':
+            return '<p class="text-primary">Finalizado</p>';
+        case 'cancelado':
+            return '<button type="button" class="btn-pedido btn btn-sm btn-danger">Cancelado</button>';
+    }
+}
+
 helpers.indexProd = (numero, actual, actualCategoria, actualSubCategoria) => {
     let fragment = "";
     let element;
@@ -73,6 +88,19 @@ helpers.pagProd = (numero, actual, actualEstado, usuario) => {
     }
     fragment = fragment + element;
     return fragment;
+}
+
+helpers.background = (item) => {
+    switch (item) {
+        case 'nuevo':
+            return 'bg-success'
+        case 'proceso':
+            return 'bg-primary'
+        case 'entrega':
+            return 'bg-warning'
+        case 'finalizado':
+            return 'bg-secondary'
+    }
 }
 
 module.exports = helpers;

@@ -10,10 +10,10 @@
             </div>
             <div class="d-flex ml-auto align-items-center col-md-4">
                 <select id="estado-venta" class="form-control mr-4">
-                    <option value="">Todos</option>
+                    <option value="">Estado Pedido</option>
                     {{#each estados }}
                     <option value="{{this}}" {{#if (estado @root.actualEstado this) }}selected{{/if}}>
-                        {{#status this}}{{/status}}
+                        {{this}}
                     </option>
                     {{/each}}
                 </select>
@@ -31,6 +31,8 @@
                             <th scope="col">Estado</th>
                             <th scope="col">Forma Pago</th>
                             <th scope="col">Detalle</th>
+                            <th scope="col">Estado Pedido</th>
+                            <th scope="col">Pagado</th>
                         </tr>
                     </thead>
                     <tbody id="insertar-filas">
@@ -44,10 +46,21 @@
                             <th>{{this.forma_pago}}</th>
                             <th>
                                 <button class="btn btn-sm btn-primary detalle-venta" data-id="{{this.id}}">
-                                    <i class="fas fa-trash-alt"></i>
-                                    Ver Detalle
+                                    Detalle
                                 </button>
                             </th>
+                            <th data-id="{{this.id}}">
+                            {{#casePedido this.estadoPedido}}{{/casePedido}}
+                            </th>
+                            {{#if this.pagado}}
+                            <th data-id="{{this.id}}" class="btn-link conf-pago text-danger">
+                                Pagado
+                            </th>
+                            {{else}}
+                            <th data-id="{{this.id}}" class="btn-link conf-pago">
+                                Confirmar pago
+                            </th>
+                            {{/if}}
                         </tr>
                         {{else}}
                         <tr>
@@ -81,6 +94,7 @@
             <table class="table text-center">
                 <thead class="thead-dark">
                     <tr>
+                        <th scope="col">Imagen</th>
                         <th scope="col">Producto</th>
                         <th scope="col">Cantidad</th>
                         <th scope="col">Precio</th>

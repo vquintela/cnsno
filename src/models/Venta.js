@@ -77,7 +77,7 @@ const Venta = sequelize.define('venta', {
     },
     status: {
         type: Sequelize.ENUM,
-        values: ['approved', 'in_process', 'rejected', 'efectivo', 'pagado'],
+        values: ['approved', 'in_process', 'rejected', 'efectivo'],
     },
     payment_id: {
         type: Sequelize.STRING,
@@ -95,7 +95,12 @@ const Venta = sequelize.define('venta', {
     },
     estadoPedido: {
         type: Sequelize.ENUM,
-        values: ['nuevo', 'proceso', 'entrega', 'finalizado']
+        values: ['nuevo', 'proceso', 'entrega', 'finalizado'],
+        defaultValue: 'nuevo'
+    },
+    pagado: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 });
 
@@ -124,7 +129,7 @@ Venta.hasOne(Usuario, { sourceKey: 'id_usuario', foreignKey: 'id' });
 
 const getVentas = async (estado, usuario, porPagina, porPaginaActual) => {
     let consulta;
-    if (estado !== '') consulta = { status: estado };
+    if (estado !== '') consulta = { estadoPedido: estado };
     if (usuario !== '') consulta = { ...consulta, id_usuario: usuario }
     const ventas = await Venta.findAndCountAll({
         where: {
@@ -149,6 +154,19 @@ const getVentas = async (estado, usuario, porPagina, porPaginaActual) => {
     return ventas;
 }
 
+const getVentasUser = async (estado, usuario) => {
+    let consulta;
+    if (estado !== '') consulta = { estadoPedido: estado };
+    const ventas = await Venta.findAll({
+        where: {
+            ...consulta,
+            id_usuario: usuario
+        },
+        order: [['fecha', 'DESC']]
+    });
+    return ventas;
+}
+
 const getDetalle = async (id) => {
     const detalle = await DetalleVenta.findAll({
         where: {
@@ -158,7 +176,7 @@ const getDetalle = async (id) => {
             {
                 model: Producto,
                 require: true,
-                attributes: ['id', 'nombre']
+                attributes: ['id', 'nombre', 'imagen']
             }
         ]
     });
@@ -166,7 +184,7 @@ const getDetalle = async (id) => {
 }
 
 const getEstados = async () => {
-    const estados = Venta.rawAttributes.status.values;
+    const estados = Venta.rawAttributes.estadoPedido.values;
     return estados;
 }
 
@@ -193,9 +211,45 @@ const guardarDetalle = async (detalle) => {
     }
 }
 
-const contVentas = async (req, res) => {
+const contVentas = async () => {
     const contVentas = await Venta.count();
     return contVentas;
+}
+
+const checkPago = async (id) => {
+    try {
+        let venta = await Venta.findByPk(id, {
+            attributes: ['id', 'pagado']
+        });
+        await venta.update({ pagado: !venta.pagado });
+        return 1;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const estadoPedido = async (id) => {
+    try {
+        let venta = await Venta.findByPk(id, {
+            attributes: ['id', 'estadoPedido']
+        });
+        let nuevoEstado;
+        switch (venta.estadoPedido) {
+            case 'nuevo':
+                nuevoEstado = 'proceso';
+                break;
+            case 'proceso':
+                nuevoEstado = 'entrega';
+                break;
+            case 'entrega':
+                nuevoEstado = 'finalizado';
+                break;
+        }
+        await venta.update({ estadoPedido: nuevoEstado });
+        return 1;
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 module.exports = {
@@ -207,5 +261,8 @@ module.exports = {
     guardarDetalle,
     getDetalle,
     getEstados,
-    contVentas
+    contVentas,
+    checkPago,
+    estadoPedido,
+    getVentasUser
 }

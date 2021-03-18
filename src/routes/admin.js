@@ -38,9 +38,11 @@ router.put('/users/estado/:id', isAdmin, usuarios.estadoUsuario);
 
 // VENTAS
 router.get('/ventas/:pagina', isAdmin, ventas.getVentas);
-router.get('/ventas/detalle/:id', isAdmin, ventas.getDetalle);
+router.get('/ventas/detalle/:id', isLoggedIn, ventas.getDetalle);
+router.put('/ventas/pagado/:id', isAdmin, ventas.checkPago);
+router.put('/ventas/pedido/:id', isAdmin, ventas.estadoPedido);
 
 // PERFIL
-router.get('/profile', isAdmin, dash.dash);
+router.get('/profile', isLoggedIn, dash.dash);
 
 module.exports = router;

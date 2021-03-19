@@ -231,7 +231,15 @@ const checkPago = async (id) => {
 const estadoPedido = async (id) => {
     try {
         let venta = await Venta.findByPk(id, {
-            attributes: ['id', 'estadoPedido']
+            attributes: ['id', 'estadoPedido'],
+            include: [
+                {
+                    model: Usuario,
+                    as: 'usuario',
+                    required: true,
+                    attributes: ['id', 'email']
+                }
+            ]
         });
         let nuevoEstado;
         switch (venta.estadoPedido) {
@@ -246,7 +254,7 @@ const estadoPedido = async (id) => {
                 break;
         }
         await venta.update({ estadoPedido: nuevoEstado });
-        return 1;
+        return {valor: 1, estado: nuevoEstado, email: venta.usuario.email};
     } catch (error) {
         console.log(error)
     }

@@ -3,6 +3,7 @@ const Carrito = require('../../models/Carrito');
 const Producto = require('../../models/Producto');
 const { generarPago } = require('../../lib/mercadopago');
 const imagenes = require('../../lib/imagenes');
+const mailer = require('../../lib/mailer');
 
 const getVentas = async (req, res) => {
     const porPagina = 6;
@@ -83,6 +84,7 @@ const efectivo = async (req, res) => {
             await Producto.editProducto({cantidad: prod.cantidad}, prod.id);
             await Venta.guardarDetalle({ ...det, id_venta: venta.id });
         });
+        mailer.venta(req.user.email);
         req.session.destroy();
     } catch (error) {
         console.log(error)
@@ -104,6 +106,7 @@ const pagoSuccess = async (req, res) => {
             await Producto.editProducto({cantidad: prod.cantidad}, prod.id);
             await Venta.guardarDetalle({ ...det, id_venta: venta.id });
         });
+        await mailer.venta(req.user.email);
         req.session.destroy();
     } catch (error) {
         console.log(error)
@@ -159,9 +162,10 @@ const checkPago = async (req, res) => {
 const estadoPedido = async (req, res) => {
     const id = req.params.id;
     const resp = await Venta.estadoPedido(id);
-    if (resp != 1) {
+    if (resp.valor != 1) {
         req.flash('error', 'No se pudo cambiar el estado');
     } else {
+        mailer.estadoPedido(resp.estado, resp.email);
         req.flash('success', 'Estado cambiado');
     }
     res.status(200).json('ok');

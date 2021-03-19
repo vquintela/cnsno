@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 const mailer = {}
 
 mailer.signup = async (email, nombre, apellido, numberId) => {
-    const link = `http://localhost:3000/verifica?email=${email}&id=${numberId}`;
+    const link = `${emailKeys.url}/verifica?email=${email}&id=${numberId}`;
     
     const ret = await transporter.sendMail({
         from: direccion,
@@ -61,6 +61,38 @@ mailer.contacto = async (mail) => {
             <p>Su email: ${mail.email}</p><br>
             <p>Sector Participante: ${mail.sector}</p><br>
             <p>Su comentario: ${mail.comentario}</p><br><br><br>
+            <p>Este es un mail generado de forma automatica, no lo responda!</p>
+        `
+    })
+    return ret
+}
+
+mailer.venta = async (email) => {
+    const ret = await transporter.sendMail({
+        from: direccion,
+        to: email, 
+        subject: 'Gracias por comprar en CNSNO',
+        html:`
+            <h3><b>CNSNO</b></h3><br><br>
+            <h3><b>Gracias por comunicarte con Ey-Commerce, en breve nos pondremos en contacto!</h3><br><br>
+            <p>Su mensaje fue:</p><br><br><br>
+            <p>Gracias por realizar la compra en breve nos pondremos en contacto con usted</p><br><br><br>
+            <p>Este es un mail generado de forma automatica, no lo responda!</p>
+        `
+    })
+    return ret
+}
+
+mailer.estadoPedido = async (estado, email) => {
+    const ret = await transporter.sendMail({
+        from: direccion,
+        to: email, 
+        subject: 'Gracias por comprar en CNSNO',
+        html:`
+            <h3><b>CNSNO</b></h3><br><br>
+            <h3><b>El estado de su pedido fue actualizado</h3><br><br>
+            <p>${estado}</p><br><br><br>
+            <p>Gracias por realizar la compra en breve nos pondremos en contacto con usted</p><br><br><br>
             <p>Este es un mail generado de forma automatica, no lo responda!</p>
         `
     })

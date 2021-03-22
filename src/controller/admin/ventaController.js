@@ -20,7 +20,8 @@ const getVentas = async (req, res) => {
         actualEstado: req.query.estado || '',
         paginacion: Math.ceil(ventas.count / porPagina),
         actual: pagina,
-        usuario: usuario
+        usuario: usuario,
+        csrfToken: req.csrfToken()
     })
 }
 

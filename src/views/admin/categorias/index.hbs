@@ -25,6 +25,7 @@
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{action}}" id="form-cat">
+                            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
                             <div class="form-group">
                                 <input type="text" name="nombre" placeholder="Nombre de la categoría"
                                     class="form-control" value="{{value}}">

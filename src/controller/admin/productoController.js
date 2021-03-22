@@ -22,6 +22,7 @@ const getProductos = async (req, res) => {
         actualSubCategoria: req.query.subCat || '',
         paginacion: Math.ceil(productos.count / porPagina),
         actual: pagina,
+        csrfToken: req.csrfToken()
     });
 }
 
@@ -32,6 +33,7 @@ const crearProducto = async (req, res) => {
         action: '/admin/productos/crear',
         boton: 'Crear',
         categorias: categorias.map(categoria => categoria.toJSON()),
+        csrfToken: req.csrfToken()
     });
 }
 
@@ -64,7 +66,8 @@ const addProductos = async (req, res) => {
         categorias: categorias.map(categoria => categoria.toJSON()),
         error: 'Ingrese al menos una imagen jpeg o jpg',
         actual: values.id_prod_cat,
-        e: error
+        e: error,
+        csrfToken: req.csrfToken()
     });
 }
 
@@ -85,7 +88,8 @@ const getProducto = async (req, res) => {
         categorias: categorias.map(categoria => categoria.toJSON()),
         actual: cat.categoriaPadre,
         subCat: producto.id_categoria,
-        subCats: subCats.map(categoria => categoria.toJSON())
+        subCats: subCats.map(categoria => categoria.toJSON()),
+        csrfToken: req.csrfToken()
     });
 }
 
@@ -121,7 +125,8 @@ const editProducto = async (req, res) => {
         categorias: categorias.map(categoria => categoria.toJSON()),
         error: 'Error al editar el producto',
         actual: values.id_prod_cat,
-        e: error
+        e: error,
+        csrfToken: req.csrfToken()
     });
 }
 

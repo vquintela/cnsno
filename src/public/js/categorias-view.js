@@ -4,10 +4,16 @@ document.querySelector('.estado-buscar').addEventListener('change', () => filtra
 
 const eliminar = async (e) => {
     const id = e.target.getAttribute('data-id');
-    console.log(id)
     const res = await modal('Eliminar categoría', '¿Desea eliminar esta categoría?')
     if (res) {
-        const resp = await fetch(`/admin/categorias/eliminar/${id}`, { method: 'DELETE'});
+        const token = document.querySelector('input[name="_csrf"]').value;
+        const resp = await fetch(`/admin/categorias/eliminar/${id}`, { 
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                'CSRF-Token': token 
+            },
+        });
         if (resp.ok) location.href = `${window.location.pathname}`;
     }
 }
@@ -16,9 +22,13 @@ const estado = async (e) => {
     const id = e.target.getAttribute('data-id');
     const res = await modal('Cambiar Estado', '¿Desea cambiar el estado de esta categoría?')
     if (res) {
+        const token = document.querySelector('input[name="_csrf"]').value;
         const resp = await fetch(`/admin/categorias/estado/${id}`, { 
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'CSRF-Token': token  
+            },
         });
         if (resp.ok) location.href = `${window.location.pathname}`;
     }

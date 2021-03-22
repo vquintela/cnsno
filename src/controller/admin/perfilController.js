@@ -15,7 +15,7 @@ const dash = async (req, res) => {
             cantCat: cantCat,
             cantUser: cantUser,
             cantProd: cantProd,
-            cantVentas: cantVentas
+            cantVentas: cantVentas,
         });
     } 
     if (req.user.rol === 'cliente') {
@@ -25,8 +25,10 @@ const dash = async (req, res) => {
         ventas = ventas.map(vent => vent.toJSON());
         const estados = await Venta.getEstados();
         res.render('cliente', {
+            actualEstado: estado,
             estados: estados,
-            ventas: ventas
+            ventas: ventas,
+            csrfToken: req.csrfToken()
         });
     }
 }

@@ -4,7 +4,7 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Bienvenido {{user.nombre}} {{user.apellido}} !</h1>
             <div class="col-md-4">
-                <select id="estado-venta" class="form-control mr-4">
+                <select id="estado-venta-cliente" class="form-control mr-4">
                     <option value="">Estado Pedido</option>
                     {{#each estados }}
                     <option value="{{this}}" {{#if (estado @root.actualEstado this) }}selected{{/if}}>
@@ -17,6 +17,7 @@
         <div class="row">
             {{#each ventas}}
             <div class="col-sm-3 m-2">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
                 <div class="card text-white shadow h-100 py-2 {{#background this.estadoPedido}}{{/background}}">
                     <div class="card-body">
                         <p class="card-title">Fecha: {{#date this.fecha}}{{/date}}</p>

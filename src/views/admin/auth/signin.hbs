@@ -8,6 +8,7 @@
                 <div class="card-body">
                     {{!-- <img src="/img/contacto.png" alt="Logo" class="card-img-top mx-auto m-2 rounded-circle w-50"> --}}
                     <form action="/signin" method="POST">
+                        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
                         <div class="form-group">
                             <input type="email" id="email" name="email" placeholder="Email" class="form-control">
                         </div>

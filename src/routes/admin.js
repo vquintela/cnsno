@@ -6,6 +6,11 @@ const usuarios = require('../controller/admin/usuarioController');
 const ventas = require('../controller/admin/ventaController');
 const dash = require('../controller/admin/perfilController');
 const { isAdmin, isLoggedIn } = require('../lib/auth');
+const csrf = require('csurf');
+const csrfPotection = csrf();
+
+// AGREGO PROTECCION CSRF
+router.use(csrfPotection);
 
 // PRODUCTOS
 router.get('/productos/crear', isAdmin, productos.crearProducto);

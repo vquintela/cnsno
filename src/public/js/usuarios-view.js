@@ -5,7 +5,14 @@ const eliminar = async (e) => {
     const id = e.target.getAttribute('data-id');
     const res = await modal('Eliminar Usuario', '¿Desea Eliminar este Usuario?');
     if (res) {
-        const resp = await fetch(`/admin/users/eliminar/${id}`, { method: 'DELETE'});
+        const token = document.querySelector('input[name="_csrf"]').value;
+        const resp = await fetch(`/admin/users/eliminar/${id}`, { 
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                'CSRF-Token': token 
+            },
+        });
         if (resp.ok) location.href = '/admin/users';
     }
 }
@@ -14,9 +21,13 @@ const estado = async (e) => {
     const id = e.target.getAttribute('data-id');
     const res = await modal('Cambiar Estado', '¿Desea cambiar el estado de este usuario?')
     if (res) {
+        const token = document.querySelector('input[name="_csrf"]').value;
         const resp = await fetch(`/admin/users/estado/${id}`, { 
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'CSRF-Token': token 
+            },
         });
         if (resp.ok) location.href = `${window.location.pathname}`;
     }

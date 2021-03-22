@@ -9,6 +9,7 @@
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{action}}">
+                        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
                         <div class="form-group">
                             <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control" value="{{user.nombre}}">
                             <span class="text-danger">{{e.nombre}}</span>

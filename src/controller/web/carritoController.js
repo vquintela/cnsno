@@ -60,6 +60,7 @@ const verCarrito = (req, res) => {
   res.render("web/carrito", {
     productos: carrito.generateArray(),
     precioTotal: carrito.totalPrice,
+    csrfToken: req.csrfToken()
   });
 };
 

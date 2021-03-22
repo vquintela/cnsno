@@ -47,6 +47,7 @@
     {{#if user}}
     <div class="card-body">
         <form method="POST" action="/pagar">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             <div class="form-group">
                 <label class="text-muted">Nombre de facturacion</label>
                 <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control"

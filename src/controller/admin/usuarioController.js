@@ -9,7 +9,8 @@ const getUsuarios = async (req, res) => {
         usuarios: usuarios.map(usuario => usuario.toJSON()),
         roles: roles,
         actualEstado: estado,
-        actualRol: rol
+        actualRol: rol,
+        csrfToken: req.csrfToken()
     })
 }
 
@@ -19,7 +20,8 @@ const addUsuarios = async (req, res) => {
         titulo: 'Crear Usuario',
         boton: 'Crear',
         action: '/admin/users/crear',
-        roles: roles
+        roles: roles,
+        csrfToken: req.csrfToken()
     });
 }
 
@@ -36,7 +38,8 @@ const crearUsuarios = async (req, res) => {
             action: '/admin/users/crear',
             danger: 'Ocurrio un error en la creacion',
             e: resp,
-            user: values
+            user: values,
+            csrfToken: req.csrfToken()
         });
     }
 }
@@ -55,7 +58,8 @@ const getUsuario = async (req, res) => {
         boton: 'Editar',
         action: `/admin/users/editar/${req.params.id}`,
         user: user.toJSON(),
-        roles: roles
+        roles: roles,
+        csrfToken: req.csrfToken()
     })
 }
 
@@ -79,7 +83,8 @@ const editUsuario = async (req, res) => {
             action: `/admin/users/editar/${req.params.id}`,
             error: 'Ocurrio un error en la edicion',
             e: resp,
-            user: values
+            user: values,
+            csrfToken: req.csrfToken()
         });
     }
 }

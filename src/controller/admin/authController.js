@@ -4,7 +4,9 @@ const mailer = require('../../lib/mailer');
 const Usuario = require('../../models/Usuario');
 
 const signin = async (req, res) => {
-    res.render('admin/auth/signin');
+    res.render('admin/auth/signin', {
+        csrfToken: req.csrfToken()
+    });
 }
 
 // LOCAL SIGNIN
@@ -51,7 +53,9 @@ const callbackFacebook = async (req, res, next) => {
 
 // SIGNUP
 const signup = (req, res) => {
-    res.render('admin/auth/signup');
+    res.render('admin/auth/signup', {
+        csrfToken: req.csrfToken()
+    });
 }
 
 const saveSignup = async (req, res) => {

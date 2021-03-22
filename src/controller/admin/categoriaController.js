@@ -17,6 +17,7 @@ const getCategorias = async (req, res) => {
         padre: req.params.padre,
         actual: filtro,
         categorias: categorias.map(categoria => categoria.toJSON()),
+        csrfToken: req.csrfToken()
     });
 }
 
@@ -65,6 +66,7 @@ const getCategoria = async (req, res) => {
         padre: req.params.padre,
         value: categoria.nombre,
         categorias: categorias.map(categoria => categoria.toJSON()),
+        csrfToken: req.csrfToken()
     });
 }
 
@@ -72,7 +74,7 @@ const editCategoria = async (req, res) => {
     const id = req.params.id;
     const padre = req.params.padre
     const values = req.body;
-    const resp = await Categoria.editCategoria(id, values);
+    const resp = await Categorias.editCategoria(id, values);
     if (resp != 1) {
         req.flash('error', resp);
     } else {

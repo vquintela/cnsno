@@ -10,7 +10,7 @@ const helmet = require('helmet');
 
 //Iniciar Servidor
 const app = express();
-require('./lib/passport')
+require('./lib/passport');
 
 //Settings
 app.set('port', process.env.PORT || 3000);
@@ -28,8 +28,8 @@ app.use(multer({dest: path.join(__dirname, 'public/img')}).array('imagen', 5));
 //Middlewares
 app.use(session({
     secret: 'Logueo-Node',
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
 }));
 app.use(morgan('dev'));
 app.use(express.json());
@@ -37,7 +37,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: false,
+}));
 
 //Variables globales
 app.use((req, res, next) => {
@@ -50,8 +52,6 @@ app.use((req, res, next) => {
 
 //Routes
 app.use(require('./routes/index'));
-app.use('/cliente', require('./routes/cliente'));
-// app.use('/admin', isAdmin, require('./routes/admin'));
 app.use('/admin', require('./routes/admin'));
 
 //archivos publicos

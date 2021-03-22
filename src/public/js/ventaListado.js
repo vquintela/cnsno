@@ -3,9 +3,13 @@ document.querySelectorAll('.detalle-venta').forEach(element => {
     element.addEventListener('click', async (e) => {
         e.preventDefault();
         const id = e.target.getAttribute('data-id');
+        const token = document.querySelector('input[name="_csrf"]').value;
         const resp = await fetch(`/admin/ventas/detalle/${id}`, { 
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'CSRF-Token': token  
+            },
         }); 
         const res = JSON.parse(await resp.text());
         detalleModal(res)
@@ -57,7 +61,7 @@ const mostrarModal = () => {
 }
 
 // FILTRO DE BUSQUEDA POR ESTADO DE LA VENTA
-document.getElementById('estado-venta').addEventListener('change', e => {
+document.getElementById('estado-venta')?.addEventListener('change', e => {
     const params = new URLSearchParams(window.location.search);
     const usuario = params.get('usuario') || '';
     location.href = `/admin/ventas/1?estado=${e.target.value}&usuario=${usuario}`;
@@ -83,9 +87,13 @@ document.querySelectorAll('.conf-pago').forEach(element => {
 const checkPago = async (id) => {
     const res = await modal('Confirmar pago', '¿Desea confirmar el pago?')
     if (res) {
+        const token = document.querySelector('input[name="_csrf"]').value;
         const resp = await fetch(`/admin/ventas/pagado/${id}`, { 
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'CSRF-Token': token  
+            }
         });
         if (resp.ok) location.href = '/admin/ventas/1'
     }
@@ -102,10 +110,19 @@ document.querySelectorAll('.btn-pedido').forEach(element => {
 const estadoPedido = async (id) => {
     const res = await modal('Actualizar Estado', '¿Desea actualizar el estado?')
     if (res) {
+        const token = document.querySelector('input[name="_csrf"]').value;
         const resp = await fetch(`/admin/ventas/pedido/${id}`, { 
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'CSRF-Token': token  
+            }
         });
         if (resp.ok) location.href = '/admin/ventas/1'
     }
 }
+
+// FILTRO CLIENTE
+document.getElementById('estado-venta-cliente')?.addEventListener('change', e => {
+    location.href = `/admin/profile?estado=${e.target.value}`;
+});

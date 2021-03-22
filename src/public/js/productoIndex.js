@@ -15,7 +15,14 @@ const eliminar = async (e) => {
     const id = e.target.getAttribute('data-id');
     const res = await modal('Eliminar Producto', '¿Desea Eliminar este Producto?')
     if (res) {
-        const resp = await fetch(`/admin/productos/eliminar/${id}`, { method: 'DELETE'});
+        const token = document.querySelector('input[name="_csrf"]').value;
+        const resp = await fetch(`/admin/productos/eliminar/${id}`, { 
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                'CSRF-Token': token 
+            }
+        });
         if (resp.ok) location.href = '/admin/productos/1'
     }
 }
@@ -25,9 +32,13 @@ const estado = async (e) => {
     const estado = JSON.parse(e.target.getAttribute('estado-producto'));
     const res = await modal('Cambiar Estado', '¿Desea cambiar el estado de este Producto?')
     if (res) {
+        const token = document.querySelector('input[name="_csrf"]').value;
         const resp = await fetch(`/admin/productos/estado/${id}`, { 
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'CSRF-Token': token 
+            },
             body: JSON.stringify({estado})
         });
         if (resp.ok) location.href = '/admin/productos/1'

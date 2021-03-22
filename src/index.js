@@ -6,6 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const multer = require('multer');
+const helmet = require('helmet');
 
 //Iniciar Servidor
 const app = express();
@@ -36,6 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(helmet());
 
 //Variables globales
 app.use((req, res, next) => {

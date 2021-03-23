@@ -1,4 +1,4 @@
-document.getElementById('renewPass').addEventListener('click', () => {
+document.getElementById('renewPass')?.addEventListener('click', () => {
     renewPass();
 });
 

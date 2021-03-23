@@ -2,15 +2,24 @@ const passport = require('passport');
 const generate = require('../../lib/generateId');
 const mailer = require('../../lib/mailer');
 const Usuario = require('../../models/Usuario');
+const { recaptchaKeys } = require('../../lib/keys');
+const fetch = require('node-fetch');
 
 const signin = async (req, res) => {
     res.render('admin/auth/signin', {
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
+        captchaToken: recaptchaKeys.sitio
     });
 }
 
 // LOCAL SIGNIN
 const login = async (req, res, next) => {
+    const captcha = await validarCaptcha(req.body.captchaToken);
+    if (!captcha) {
+        req.flash('error', 'Captcha no validado')
+        res.redirect('/signin')
+        return
+    }
     if(!req.body.email.trim() || !req.body.password.trim()) {
         req.flash('error', 'Complete todos los campos')
         res.redirect('/signin')
@@ -54,16 +63,28 @@ const callbackFacebook = async (req, res, next) => {
 // SIGNUP
 const signup = (req, res) => {
     res.render('admin/auth/signup', {
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
+        captchaToken: recaptchaKeys.sitio
     });
 }
 
 const saveSignup = async (req, res) => {
     const usuario = req.body;
+    const captcha = await validarCaptcha(req.body.captchaToken);
+    if (!captcha) {
+        return res.render('admin/auth/signup', { 
+            error: 'Recaptcha Fallo',
+            csrfToken: req.csrfToken(),
+            usuario: usuario,
+            captchaToken: recaptchaKeys.sitio
+        });
+    }
     if(usuario.password !== usuario.verificarPassword) {
         return res.render('admin/auth/signup', { 
             errorpassword: 'Las contraseñas no coinciden',
-            usuario: usuario
+            csrfToken: req.csrfToken(),
+            usuario: usuario,
+            captchaToken: recaptchaKeys.sitio
         });
     }
     usuario.numAut = generate.name();
@@ -76,7 +97,9 @@ const saveSignup = async (req, res) => {
     } else {
         res.render('admin/auth/signup', {
             e: resp,
-            usuario: usuario
+            csrfToken: req.csrfToken(),
+            usuario: usuario,
+            captchaToken: recaptchaKeys.sitio
         })
         return;
 
@@ -124,6 +147,15 @@ const nuevoPass = async (req, res) => {
         req.flash('error', 'Usuario no Registrado, registrese por favor');
         res.status(200).json('Ok');
     }
+}
+
+const validarCaptcha = async (token) => {
+    if (!token) return false;
+    const verifyURL = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaKeys.secret}&response=${token}`;
+    const body = await fetch(verifyURL).then((res) => res.json());
+    if (body.success !== undefined && !body.success) return false;
+    if (body.score < 0.5) return false;
+    return true;
 }
 
 module.exports = {

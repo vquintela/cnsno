@@ -6,8 +6,9 @@
                     <h3>CNSNO</h3>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="/signup">
+                    <form method="POST" action="/signup" id="form-sign">
                         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                        <input type="hidden" name="captchaToken" id="captchaToken" value="">
                         <div class="form-group">
                             <input type="text" name="nombre" placeholder="Nombre" class="form-control" autofocus value="{{usuario.nombre}}">
                             <span class="text-danger">{{e.nombre}}</span>
@@ -36,3 +37,12 @@
         </div>
     </div>
 </div>
+{{!-- RECAPTCHA --}}
+<script src="https://www.google.com/recaptcha/api.js?render={{captchaToken}}"></script>
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6Lf2oYsaAAAAAMRwD5eoSVb74hgqVehlbktog9BS', {action: 'homepage'}).then(function(token) {
+            document.getElementById('captchaToken').value = token;
+        });
+    });
+</script>

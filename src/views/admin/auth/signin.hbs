@@ -9,6 +9,7 @@
                     {{!-- <img src="/img/contacto.png" alt="Logo" class="card-img-top mx-auto m-2 rounded-circle w-50"> --}}
                     <form action="/signin" method="POST">
                         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                        <input type="hidden" name="captchaToken" id="captchaToken" value="">
                         <div class="form-group">
                             <input type="email" id="email" name="email" placeholder="Email" class="form-control">
                         </div>
@@ -36,3 +37,12 @@
     </div>
 </div>
 <script src="/js/signin.js"></script>
+{{!-- RECAPTCHA --}}
+<script src="https://www.google.com/recaptcha/api.js?render={{captchaToken}}"></script>
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6Lf2oYsaAAAAAMRwD5eoSVb74hgqVehlbktog9BS', {action: 'homepage'}).then(function(token) {
+            document.getElementById('captchaToken').value = token;
+        });
+    });
+</script>

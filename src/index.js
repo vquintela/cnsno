@@ -38,7 +38,20 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(helmet({
-    contentSecurityPolicy: false,
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: [
+                "'self'",
+                "'unsafe-inline'",
+                'cdnjs.cloudflare.com',
+                'stackpath.bootstrapcdn.com',
+                'cdn.ckeditor.com',
+                'use.fontawesome.com',
+                'https://www.google.com/',
+                'https://www.gstatic.com/'
+            ],
+        }
+    },
 }));
 
 //Variables globales

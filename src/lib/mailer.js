@@ -1,16 +1,13 @@
 const nodemailer = require('nodemailer');
 const { emailKeys } = require('./keys');
 
-const direccion = emailKeys.email;
-const pass = emailKeys.pass;
-
 const transporter = nodemailer.createTransport({
     host: emailKeys.host,
     port: emailKeys.port,
     secure: true, 
     auth: {
-        user: direccion,
-        pass: pass
+        user: emailKeys.email,
+        pass: emailKeys.pass
     }
 })
 
@@ -20,7 +17,7 @@ mailer.signup = async (email, nombre, apellido, numberId) => {
     const link = `${emailKeys.url}/verifica?email=${email}&id=${numberId}`;
     
     const ret = await transporter.sendMail({
-        from: direccion,
+        from: emailKeys.email,
         to: email,
         subject: 'MCR Validacion de Email',
         html: `
@@ -34,7 +31,7 @@ mailer.signup = async (email, nombre, apellido, numberId) => {
 
 mailer.renew = async (email, nombre, apellido, password) => {
     const ret = await transporter.sendMail({
-        from: direccion,
+        from: emailKeys.email,
         to: email,
         subject: 'Blanqueo de password',
         html: `
@@ -48,9 +45,9 @@ mailer.renew = async (email, nombre, apellido, password) => {
 
 mailer.contacto = async (mail) => {
     const ret = await transporter.sendMail({
-        from: direccion,
+        from: emailKeys.email,
         to: mail.email, 
-        cc: direccion,
+        cc: emailKeys.email,
         subject: 'Gracias por contactarse con Ey-Commerce',
         html:`
             <h3><b>Ey-Commerce</b></h3><br><br>
@@ -69,7 +66,7 @@ mailer.contacto = async (mail) => {
 
 mailer.venta = async (email) => {
     const ret = await transporter.sendMail({
-        from: direccion,
+        from: emailKeys.email,
         to: email, 
         subject: 'Gracias por comprar en CNSNO',
         html:`
@@ -85,7 +82,7 @@ mailer.venta = async (email) => {
 
 mailer.estadoPedido = async (estado, email) => {
     const ret = await transporter.sendMail({
-        from: direccion,
+        from: emailKeys.email,
         to: email, 
         subject: 'Gracias por comprar en CNSNO',
         html:`

@@ -14,7 +14,7 @@ const Categoria = sequelize.define('categoria', {
         allowNull: false,
         validate: {
             notEmpty: {
-                msg: 'No se permiten campos vacios'
+                msg: 'No se permiten campos vacios',
             }
         },
         min: {

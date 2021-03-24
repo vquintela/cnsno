@@ -50,6 +50,30 @@ app.use(helmet({
                 'https://www.google.com/',
                 'https://www.gstatic.com/'
             ],
+            "img-src": [
+                "'self'",
+                "data:"
+            ]
+            // styleSrc:[
+            //     "'self'",
+            //     "'unsafe-inline'",
+            //     'cdnjs.cloudflare.com',
+            //     'stackpath.bootstrapcdn.com',
+            //     'cdn.ckeditor.com',
+            //     'use.fontawesome.com',
+            //     'https://www.google.com/',
+            //     'https://www.gstatic.com/'
+            // ],
+            // scriptSrc: [
+            //     "'self'",
+            //     "'unsafe-inline'",
+            //     'cdnjs.cloudflare.com',
+            //     'stackpath.bootstrapcdn.com',
+            //     'cdn.ckeditor.com',
+            //     'use.fontawesome.com',
+            //     'https://www.google.com/',
+            //     'https://www.gstatic.com/'
+            // ]
         }
     },
 }));
@@ -66,6 +90,8 @@ app.use((req, res, next) => {
 //Routes
 app.use(require('./routes/index'));
 app.use('/admin', require('./routes/admin'));
+// app.use((req, res, next) => res.status(404).render('errors/404'));
+// app.use((err, req, res, next) => res.status(500).render('errors/500'));
 
 //archivos publicos
 app.use(express.static(path.join(__dirname, 'public')));

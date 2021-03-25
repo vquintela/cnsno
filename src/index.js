@@ -87,14 +87,15 @@ app.use((req, res, next) => {
     next();
 });
 
+//archivos publicos
+app.use(express.static(path.join(__dirname, 'public')));
+// app.use('/public', express.static(path.join(__dirname, 'public')));
+
 //Routes
 app.use(require('./routes/index'));
 app.use('/admin', require('./routes/admin'));
-// app.use((req, res, next) => res.status(404).render('errors/404'));
-// app.use((err, req, res, next) => res.status(500).render('errors/500'));
-
-//archivos publicos
-app.use(express.static(path.join(__dirname, 'public')));
+app.use((req, res, next) => res.status(404).render('errors/404', {layout: 'error'}));
+app.use((err, req, res, next) => res.status(500).render('errors/500'));
 
 //Iniciar Servidor
 app.listen(app.get('port'), () => {

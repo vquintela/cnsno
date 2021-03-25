@@ -80,6 +80,16 @@ figcaption span {
 .u:before {
 	box-shadow: 1em 1em, 1em 2em, 1em 3em, 1em 4em, 1em 5em, 4em 1em, 4em 2em, 4em 3em, 4em 4em, 4em 5em, 2em 6em, 3em 6em;
 }
+.boton {
+	position: absolute;
+	bottom: 30px;
+	left: 45%;
+	color: white;
+	text-decoration: none;
+	background-color: teal;
+	padding: 15px 30px;
+	border-radius: 30px;
+}
 @media screen and (min-width: 720px) {
 	figure {
 	    font-size: 7px;

@@ -122,6 +122,28 @@ const estadoPedido = async (id) => {
     }
 }
 
+document.querySelectorAll('.btn-cancelar').forEach(element => {
+    element.addEventListener('click', e => {
+        const id = e.target.parentElement.getAttribute('data-id');
+        cancelarPedido(id);
+    });
+});
+
+const cancelarPedido = async (id) => {
+    const res = await modal('Cancelar Pedido', '¿Desea cancelar el pedido?')
+    if (res) {
+        const token = document.querySelector('input[name="_csrf"]').value;
+        const resp = await fetch(`/admin/ventas/cancelarpedido/${id}`, { 
+            method: 'PUT',
+            headers: { 
+                'Content-Type': 'application/json',
+                'CSRF-Token': token  
+            }
+        });
+        if (resp.ok) location.href = '/admin/ventas/1'
+    }
+}
+
 // FILTRO CLIENTE
 document.getElementById('estado-venta-cliente')?.addEventListener('change', e => {
     location.href = `/admin/profile?estado=${e.target.value}`;

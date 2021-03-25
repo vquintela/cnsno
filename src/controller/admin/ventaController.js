@@ -172,6 +172,18 @@ const estadoPedido = async (req, res) => {
     res.status(200).json('ok');
 }
 
+const cancelarPedido = async (req, res) => {
+    const id = req.params.id;
+    const resp = await Venta.cancelarPedido(id);
+    if (resp.valor != 1) {
+        req.flash('error', 'No se pudo cambiar el estado');
+    } else {
+        mailer.estadoPedido(resp.estado, resp.email);
+        req.flash('success', 'Pedido Cancelado');
+    }
+    res.status(200).json('ok');
+}
+
 module.exports = {
     getVentas,
     pagar,
@@ -181,5 +193,6 @@ module.exports = {
     pagoPending,
     getDetalle,
     checkPago,
-    estadoPedido
+    estadoPedido,
+    cancelarPedido
 }

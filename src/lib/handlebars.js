@@ -26,11 +26,20 @@ helpers.status = (status) => {
 helpers.casePedido = (pedido) => {
     switch (pedido) {
         case 'nuevo':
-            return '<button type="button" class="btn-pedido btn btn-sm btn-success">Nuevo</button>';
+            return `
+                <button type="button" class="btn-pedido btn btn-sm btn-success">Nuevo</button>
+                <button type="button" class="btn-cancelar btn btn-sm btn-danger">Cancelar</button>
+            `;
         case 'proceso':
-            return '<button type="button" class="btn-pedido btn btn-sm btn-warning">En Proceso</button>';
+            return `
+                <button type="button" class="btn-pedido btn btn-sm btn-warning">En Proceso</button>
+                <button type="button" class="btn-cancelar btn btn-sm btn-danger">Cancelar</button>
+            `;
         case 'entrega':
-            return '<button type="button" class="btn-pedido btn btn-sm btn-secondary">Entrega</button>';
+            return `
+                <button type="button" class="btn-pedido btn btn-sm btn-secondary">Entrega</button>
+                <button type="button" class="btn-cancelar btn btn-sm btn-danger">Cancelar</button>
+            `;
         case 'finalizado':
             return '<p class="text-primary">Finalizado</p>';
         case 'cancelado':

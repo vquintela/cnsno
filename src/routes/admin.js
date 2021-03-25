@@ -46,6 +46,7 @@ router.get('/ventas/:pagina', isAdmin, ventas.getVentas);
 router.get('/ventas/detalle/:id', isLoggedIn, ventas.getDetalle);
 router.put('/ventas/pagado/:id', isAdmin, ventas.checkPago);
 router.put('/ventas/pedido/:id', isAdmin, ventas.estadoPedido);
+router.put('/ventas/cancelarpedido/:id', isAdmin, ventas.cancelarPedido);
 
 // PERFIL
 router.get('/profile', isLoggedIn, dash.dash);

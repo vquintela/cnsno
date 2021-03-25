@@ -95,7 +95,7 @@ const Venta = sequelize.define('venta', {
     },
     estadoPedido: {
         type: Sequelize.ENUM,
-        values: ['nuevo', 'proceso', 'entrega', 'finalizado'],
+        values: ['nuevo', 'proceso', 'entrega', 'finalizado', 'cancelado'],
         defaultValue: 'nuevo'
     },
     pagado: {
@@ -252,11 +252,34 @@ const estadoPedido = async (id) => {
             case 'entrega':
                 nuevoEstado = 'finalizado';
                 break;
+            case 'cancelado':
+                nuevoEstado = 'nuevo';
+                break;
         }
         await venta.update({ estadoPedido: nuevoEstado });
         return {valor: 1, estado: nuevoEstado, email: venta.usuario.email};
     } catch (error) {
         console.log(error)
+    }
+}
+
+const cancelarPedido = async (id) => {
+    try {
+        let venta = await Venta.findByPk(id, {
+            attributes: ['id', 'estadoPedido'],
+            include: [
+                {
+                    model: Usuario,
+                    as: 'usuario',
+                    required: true,
+                    attributes: ['id', 'email']
+                }
+            ]
+        });
+        await venta.update({ estadoPedido: 'cancelado' });
+        return {valor: 1, estado: 'cancelado', email: venta.usuario.email};
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -272,5 +295,6 @@ module.exports = {
     contVentas,
     checkPago,
     estadoPedido,
-    getVentasUser
+    getVentasUser,
+    cancelarPedido
 }
